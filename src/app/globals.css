@@ -1,0 +1,110 @@
+@import "tailwindcss";
+@import "@fontsource-variable/fraunces";
+@import "@fontsource-variable/inter";
+
+/* Palette tirée du logo et de la bannière de la COOP-DCVA : vert, brun, sésame. */
+@theme {
+  --color-leaf-50: #eef7ee;
+  --color-leaf-100: #d6ecd8;
+  --color-leaf-500: #1f8a43;
+  --color-leaf-600: #17733a;
+  --color-leaf-700: #115c2f;
+  --color-leaf-900: #0b3a1e;
+
+  --color-soil-100: #efe3d6;
+  --color-soil-500: #8a5a37;
+  --color-soil-700: #6b4226;
+  --color-soil-900: #3d2412;
+
+  --color-sesame-300: #f0c566;
+  --color-sesame-500: #e0a526;
+  --color-sesame-700: #9a6a07;
+
+  --color-cream: #faf5ea;
+  --color-paper: #fffdf8;
+  --color-ink: #1d2a20;
+  --color-ink-soft: #4a5a4d;
+
+  --font-display: "Fraunces Variable", Georgia, "Times New Roman", serif;
+  --font-sans: "Inter Variable", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-cream);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+.font-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.01em;
+}
+
+/* Focus visible net, utile au clavier. */
+:focus-visible {
+  outline: 3px solid var(--color-sesame-500);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Texture légère façon grain de céréale. */
+.grain {
+  background-image:
+    radial-gradient(circle at 20% 30%, rgb(255 255 255 / 0.07) 0 2px, transparent 3px),
+    radial-gradient(circle at 70% 60%, rgb(255 255 255 / 0.05) 0 2px, transparent 3px),
+    radial-gradient(circle at 40% 85%, rgb(255 255 255 / 0.06) 0 2px, transparent 3px);
+  background-size: 90px 90px, 120px 120px, 70px 70px;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes sway {
+  0%,
+  100% {
+    transform: rotate(-2deg);
+  }
+  50% {
+    transform: rotate(2deg);
+  }
+}
+
+.rise {
+  animation: rise 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.rise-2 {
+  animation-delay: 0.12s;
+}
+.rise-3 {
+  animation-delay: 0.24s;
+}
+.sway {
+  transform-origin: 50% 100%;
+  animation: sway 6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rise,
+  .sway {
+    animation: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
