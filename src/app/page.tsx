@@ -5,7 +5,6 @@ import {
   chiffres,
   equipements,
   filieres,
-  piliers,
   projets,
   site,
   soutiens,
@@ -17,32 +16,49 @@ export default function Home() {
 
   return (
     <>
-      {/* HÉROS : la bannière officielle fond sur le même vert que la page */}
-      <section className="relative overflow-hidden bg-[#0f8f38] px-5 pb-16 pt-6 text-white sm:pt-10">
-        <div className="mx-auto max-w-[1080px]">
-          <Image
-            src="/images/banniere-hero.png"
-            alt="COOP-DCVA, Coopérative de Production et de Développement des Chaînes de Valeur Agroalimentaires. Qui ne se plante pas ne pousse jamais."
-            width={1080}
-            height={430}
-            priority
-            className="rise h-auto w-full"
-          />
-          <ul className="rise rise-2 mx-auto mt-2 flex max-w-4xl flex-wrap justify-center gap-2.5">
-            {piliers.map((p) => (
-              <li
-                key={p}
-                className="rounded-full bg-white px-4 py-2 text-xs font-bold uppercase tracking-wide text-soil-700 shadow-sm sm:text-sm"
-              >
-                {p}
-              </li>
-            ))}
-          </ul>
-          <div className="rise rise-3 mt-8 flex flex-wrap justify-center gap-3">
-            <ButtonLink href="/filieres">Découvrir nos filières</ButtonLink>
-            <ButtonLink href="/projets" variant="ghost">
-              Nos projets
-            </ButtonLink>
+      {/* HÉROS */}
+      <section className="grain relative overflow-hidden bg-leaf-700 px-5 pb-20 pt-14 text-white sm:pt-20">
+        <div
+          aria-hidden="true"
+          className="absolute -right-32 -top-32 h-[34rem] w-[34rem] rounded-full border border-white/10"
+        />
+        <div
+          aria-hidden="true"
+          className="absolute -right-12 -top-12 h-[24rem] w-[24rem] rounded-full border border-white/10"
+        />
+        <div className="relative mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-[1.2fr_0.8fr]">
+          <div>
+            <p className="rise text-xs font-semibold uppercase tracking-[0.22em] text-sesame-300">
+              Coopérative agroalimentaire · N&apos;Djaména, Tchad
+            </p>
+            <h1 className="rise rise-2 font-display mt-4 text-5xl font-semibold leading-[1.05] sm:text-6xl lg:text-7xl">
+              Qui ne se plante pas
+              <br />
+              <span className="italic text-sesame-300">ne pousse jamais.</span>
+            </h1>
+            <p className="rise rise-3 mt-6 max-w-xl text-lg leading-relaxed text-leaf-100">
+              Nous transformons les céréales, les graines et la spiruline du Tchad, et nous
+              formons les femmes et les jeunes qui font vivre ces filières.
+            </p>
+            <div className="rise rise-3 mt-8 flex flex-wrap gap-3">
+              <ButtonLink href="/filieres">Découvrir nos filières</ButtonLink>
+              <ButtonLink href="/projets" variant="ghost">
+                Nos projets
+              </ButtonLink>
+            </div>
+          </div>
+
+          <div className="relative mx-auto aspect-square w-full max-w-sm">
+            <div className="absolute inset-0 rounded-full bg-leaf-600/60" />
+            <div className="absolute inset-6 rounded-full bg-paper shadow-2xl shadow-leaf-900/40" />
+            <Image
+              src="/images/embleme.png"
+              alt="Emblème de la COOP-DCVA : une pousse entre deux mains au-dessus d'une terre cultivée"
+              width={280}
+              height={425}
+              priority
+              className="sway absolute left-1/2 top-1/2 h-[62%] w-auto -translate-x-1/2 -translate-y-1/2"
+            />
           </div>
         </div>
       </section>
