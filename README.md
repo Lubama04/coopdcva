@@ -47,7 +47,23 @@ Sans domaine vérifié, Resend n'accepte que l'expéditeur `onboarding@resend.de
 2. Définir `NEXT_PUBLIC_SITE_URL` (ex. `https://coopdcva.td`) dans Vercel.
 3. Ajouter le domaine au projet Vercel et saisir les DNS chez le registraire.
 
+## Tests
+
+```bash
+npm run build
+npm run test:e2e        # 34 tests Playwright sur le Chrome installé (mobile + bureau)
+E2E_BASE_URL=https://coop-dcva-site.vercel.app npm run test:e2e   # contre la production
+```
+
 ## Héberger ailleurs que Vercel
 
-- **Serveur Node** (VPS, Coolify) : `npm ci && npm run build && npm start` (port 3000), derrière un proxy HTTPS.
-- Les en-têtes de sécurité sont définis dans `next.config.ts` et s'appliquent quel que soit l'hébergeur Node.
+Le site n'utilise rien de propre à Vercel : il peut être repris par la coopérative ou un autre prestataire.
+
+| Option | Comment | Remarques |
+|---|---|---|
+| **Vercel** (actuel) | Push sur `main` = déploiement automatique | Le plan gratuit « Hobby » est réservé à un usage non commercial : pour un site d'organisation, prévoir le plan Pro (≈ 20 $/mois) ou un autre hébergeur. |
+| **Coolify** auto-hébergé (VPS ~5-10 €/mois) | Nouvelle application « Nixpacks » depuis le dépôt GitHub, commande de build `npm run build`, démarrage `npm start`, port 3000 ; ajouter les variables `RESEND_API_KEY`, `CONTACT_TO_EMAIL`, `CONTACT_FROM_EMAIL`, `NEXT_PUBLIC_SITE_URL` | HTTPS automatique (Let's Encrypt). Les en-têtes de sécurité de `next.config.ts` s'appliquent. |
+| **Tout serveur Node 20+** | `npm ci && npm run build && npm start` derrière Nginx/Caddy en HTTPS | Même chose qu'avec Coolify, à la main. |
+| **Export statique** (hébergement mutualisé simple) | Possible seulement en retirant la route `/api/contact` (formulaire remplacé par WhatsApp/e-mail ou Formspree) et en passant `output: "export"` | Les en-têtes de sécurité et la redirection `/proval-zd` devront être refaits dans la configuration du serveur. |
+
+Guide non technique pour la coopérative : [docs/GUIDE-COOPERATIVE.md](docs/GUIDE-COOPERATIVE.md).

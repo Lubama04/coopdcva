@@ -42,6 +42,9 @@ Pièges connus : `new Date()` interdit au prérendu (cacheComponents) ; `params`
 - `src/components/` — `Header`, `Footer`, `Logo` (emblème SVG + texte, et `LogoFull`), `ui.tsx` (SectionTitle, Section, PageHero, ButtonLink, FiliereCard, StatusBadge, ProjetCard, ActivitesGrid, Reseau), `ProjetsExplorer` (filtre), `GalerieExplorer` (mosaïque, filtres, visionneuse clavier/tactile), `ContactForm` (WhatsApp ou mailto, sans serveur), `WhatsAppButton` (bouton flottant).
 - `public/images/` — `logo.svg`/`embleme.svg` (vectoriels, tirés du PDF officiel) + PNG haute définition, `banniere.png`, `galerie/*.jpg`, `activites/*.jpg` (photos recadrées du dépliant, titrées par les intitulés du dépliant), `partenaires/*.png` (logos recadrés du dépliant) ; `public/videos/deshydrateur-alimentaire.mp4`.
 - `A-CONFIRMER.md` — toutes les questions ouvertes pour la présidente.
+- `docs/GUIDE-COOPERATIVE.md` — guide non technique ; `e2e/` + `playwright.config.ts` — 34 tests (`npm run test:e2e`, Chrome installé, `E2E_BASE_URL` pour viser la production).
+- `src/app/api/contact/route.ts` — envoi du formulaire par Resend (variables : `RESEND_API_KEY`, `CONTACT_TO_EMAIL`, `CONTACT_FROM_EMAIL`, voir `.env.example`).
+- Polices : `src/app/fonts.ts` (next/font/local sur les fichiers fontsource). `priority` de next/image est déprécié : utiliser `loading="eager"` / `fetchPriority`.
 
 ## Dépliant officiel (lu le 18/10/2026)
 Activités : Production des matières premières · Chaînes de valeur · Renforcement des capacités · Accompagnement · Agro-alimentaire. Membres : MaPerle Natural Products, CIFTA, Soumsoumna. Partenaires : Job Booster (« emplois dignes pour les jeunes »), Bet Al-Nadjah, Chambre de Commerce, d'Industrie, d'Agriculture, des Mines et d'Artisanat, Airtel.
