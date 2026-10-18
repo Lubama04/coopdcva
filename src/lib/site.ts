@@ -104,7 +104,7 @@ export const filieres: Filiere[] = [
 export const equipements = [
   { title: "Moulin à farine", note: "Opérationnel" },
   { title: "Presse à huile motorisée", note: "Pour sésame, balanites, karité" },
-  { title: "Moulin à légumes", note: "Transformation des légumes" },
+  { title: "Moulin à dépéliculer le maïs et autres céréales", note: "Maïs et autres céréales" },
   { title: "Déshydrateur alimentaire", note: "Séchage et conservation" },
   { title: "Site de production sécurisé", note: "Quartier Gassi, N'Djaména" },
 ];
@@ -215,7 +215,7 @@ export const projets: Projet[] = [
     subtitle: "Un outil de transformation en activité",
     statut: "en-cours",
     summary:
-      "Un site sécurisé au quartier Gassi, équipé d'un moulin à farine, d'une presse à huile motorisée, d'un moulin à légumes et de matériel de séchage.",
+      "Un site sécurisé au quartier Gassi, équipé d'un moulin à farine, d'une presse à huile motorisée, d'un moulin à dépéliculer le maïs et autres céréales et d'un déshydrateur alimentaire.",
     description: [
       "Le site de Gassi est le cœur de la coopérative. C'est là que les céréales, les graines oléagineuses et la spiruline sont transformées et conditionnées.",
       "Son équipement a été réuni grâce à un financement de l'USAID.",
@@ -288,9 +288,9 @@ export function getProjet(slug: string): Projet | undefined {
 /* Galerie                                                             */
 /* ------------------------------------------------------------------ */
 
-export type Categorie = "Production" | "Séchage" | "Produits" | "Équipe";
+export type Categorie = "Moulins" | "Patate douce" | "Tomate";
 
-export const galerieCategories: Categorie[] = ["Production", "Séchage", "Produits", "Équipe"];
+export const galerieCategories: Categorie[] = ["Moulins", "Patate douce", "Tomate"];
 
 export type Photo = {
   src: string;
@@ -302,77 +302,80 @@ export type Photo = {
   categorie: Categorie;
 };
 
-/** Pour ajouter une photo : la déposer dans public/images/galerie puis ajouter une ligne ici. */
+/**
+ * Titres = noms exacts des fichiers fournis par la coopérative (dossier Coop-DCVA/Image).
+ * Pour ajouter une photo : la déposer dans public/images/galerie puis ajouter une ligne ici.
+ */
 export const galerie: Photo[] = [
   {
-    src: "/images/galerie/equipe-moulin.jpg",
+    src: "/images/galerie/depeliculer-1.jpg",
     width: 521,
     height: 1156,
-    title: "Au moulin",
-    caption: "Des membres de la coopérative autour du moulin.",
-    alt: "Trois personnes autour d'un moulin à grain rouge, les mains dans le grain",
-    categorie: "Production",
+    title: "Moulin à dépéliculer le maïs et autres céréales (1)",
+    caption: "Le moulin à dépéliculer le maïs et autres céréales, au site de Gassi.",
+    alt: "Trois personnes autour d'un moulin à dépéliculer rouge, les mains dans le grain",
+    categorie: "Moulins",
   },
   {
-    src: "/images/galerie/tomates-en-morceaux.jpg",
+    src: "/images/galerie/tomate-en-transformation.jpg",
     width: 486,
     height: 1080,
-    title: "Tomate coupée en morceaux",
+    title: "Tomate en transformation",
     caption: "Des membres disposent la tomate coupée en morceaux sur la claie.",
-    alt: "Trois femmes en tenue bleue et blanche devant une grande claie couverte de tomates coupées en morceaux",
-    categorie: "Séchage",
+    alt: "Trois femmes en tenue bleue et blanche devant une grande claie couverte de tomate coupée en morceaux",
+    categorie: "Tomate",
   },
   {
-    src: "/images/galerie/broyeur-cyclone.jpg",
+    src: "/images/galerie/moulin-farine-2.jpg",
     width: 521,
     height: 1156,
-    title: "Le broyeur",
-    caption: "Un membre à l'œuvre devant le broyeur.",
-    alt: "Un homme penché sur un broyeur vert relié à un grand cyclone en métal",
-    categorie: "Production",
+    title: "Moulin à farine (2)",
+    caption: "Le moulin à farine de la coopérative.",
+    alt: "Un homme penché sur le moulin à farine vert",
+    categorie: "Moulins",
   },
   {
-    src: "/images/galerie/friandises-torsadees.jpg",
+    src: "/images/galerie/beignets-patate-douce.jpg",
     width: 1042,
     height: 1026,
-    title: "Produit de la coopérative",
-    caption: "Produit torsadé fabriqué par la coopérative.",
-    alt: "Un grand plat rempli de produits torsadés dorés",
-    categorie: "Produits",
+    title: "Beignets de patate douce",
+    caption: "Des beignets de patate douce fabriqués par les membres.",
+    alt: "Un grand plat rempli de beignets de patate douce torsadés",
+    categorie: "Patate douce",
   },
   {
-    src: "/images/galerie/broyeur-farine.jpg",
+    src: "/images/galerie/moulin-farine-1.jpg",
     width: 521,
     height: 1156,
-    title: "Au broyeur",
-    caption: "Une membre de la coopérative à côté du broyeur.",
-    alt: "Une femme debout à côté d'un broyeur vert dont un tuyau déverse de la farine dans un bac",
-    categorie: "Équipe",
+    title: "Moulin à farine (1)",
+    caption: "Une membre de la coopérative à côté du moulin à farine.",
+    alt: "Une femme debout à côté du moulin à farine vert",
+    categorie: "Moulins",
   },
   {
-    src: "/images/galerie/patate-sechage.jpg",
+    src: "/images/galerie/transformation-patate-douce.jpg",
     width: 1038,
     height: 1133,
-    title: "Patate en transformation",
-    caption: "La patate en cours de transformation, séchée sur la claie.",
-    alt: "Des lamelles de patate séchant sur une claie à maille verte",
-    categorie: "Séchage",
+    title: "Transformation de la patate douce",
+    caption: "La patate douce en cours de transformation, séchée sur la claie.",
+    alt: "Des lamelles de patate douce séchant sur une claie à maille verte",
+    categorie: "Patate douce",
   },
   {
-    src: "/images/galerie/membre-moulin.jpg",
+    src: "/images/galerie/depeliculer-2.jpg",
     width: 398,
     height: 551,
-    title: "Une membre au moulin",
-    caption: "Une membre de la coopérative devant le moulin.",
+    title: "Moulin à dépéliculer le maïs et autres céréales (2)",
+    caption: "Une membre de la coopérative à côté du moulin à dépéliculer.",
     alt: "Une femme en tenue imprimée rose posant à côté d'un moulin rouge",
-    categorie: "Équipe",
+    categorie: "Moulins",
   },
 ];
 
 export const videoDeshydrateur = {
   src: "/videos/deshydrateur-alimentaire.mp4",
   poster: "/images/galerie/deshydrateur-poster.jpg",
-  title: "Déshydratation de la tomate",
+  title: "Déshydrateur alimentaire",
   caption:
     "Séance de déshydratation de la tomate coupée en morceaux dans le déshydrateur alimentaire.",
 };

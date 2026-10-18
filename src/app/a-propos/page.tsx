@@ -89,8 +89,8 @@ export default function AProposPage() {
             </ul>
           </div>
           <Image
-            src="/images/galerie/equipe-moulin.jpg"
-            alt="Des membres et l'équipe autour du moulin, au quartier Gassi"
+            src="/images/galerie/depeliculer-1.jpg"
+            alt="Le moulin à dépéliculer le maïs et autres céréales, au quartier Gassi"
             width={521}
             height={1156}
             sizes="(min-width: 1024px) 40vw, 100vw"

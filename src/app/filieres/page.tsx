@@ -36,7 +36,7 @@ export default function FilieresPage() {
         <ol className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {[
             { t: "Approvisionnement local", x: "Céréales, graines et spiruline du pays." },
-            { t: "Transformation", x: "Moulin, presse à huile, moulin à légumes." },
+            { t: "Transformation", x: "Moulins, presse à huile, déshydrateur alimentaire." },
             { t: "Séchage et conditionnement", x: "Conservation dans de bonnes conditions d'hygiène." },
             { t: "Vente et formation", x: "Commercialisation par les membres, qui se forment." },
           ].map((e, i) => (

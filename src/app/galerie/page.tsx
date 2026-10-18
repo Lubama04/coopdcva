@@ -6,7 +6,7 @@ import { site, videoDeshydrateur as video } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Galerie",
   description:
-    "La vie de la COOP-DCVA en images et en vidéo : moulin, broyeur, séchage des produits et membres au travail à Gassi.",
+    "La vie de la COOP-DCVA en images et en vidéo : moulins, patate douce, tomate et membres au travail à Gassi.",
 };
 
 export default function GaleriePage() {
@@ -15,7 +15,7 @@ export default function GaleriePage() {
       <PageHero
         eyebrow="Galerie"
         title="La coopérative en images"
-        intro="Le moulin, le broyeur, le séchage, les produits et celles qui les font : un aperçu du travail mené chaque jour à Gassi."
+        intro="Les moulins, la patate douce, la tomate et celles qui les transforment : un aperçu du travail mené chaque jour à Gassi."
       />
 
       <Section>
