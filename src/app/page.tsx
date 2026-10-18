@@ -11,7 +11,9 @@ import {
   SectionTitle,
 } from "@/components/ui";
 import { WhatsAppIcon } from "@/components/WhatsAppButton";
+import { ActualiteCard } from "@/components/ActualiteCard";
 import {
+  actualites,
   chiffres,
   equipements,
   galerie,
@@ -30,8 +32,6 @@ const enImages = [
   "/images/galerie/huile-savonnier.jpg",
   "/images/galerie/spiruline-dihe-du-tchad.jpg",
 ].map((src) => galerie.find((p) => p.src === src)!);
-
-const conference = galerie.find((p) => p.src.endsWith("conference-karite.jpg"));
 
 const heroPhotos = {
   a: galerie.find((p) => p.src.endsWith("tomate-en-transformation.jpg"))!,
@@ -201,7 +201,7 @@ export default function Home() {
             title="Fabriqués au Tchad, prêts à commander"
             intro="Prix et disponibilités sur simple message WhatsApp."
           />
-          <ButtonLink href="/filieres#produits" variant="secondary">
+          <ButtonLink href="/produits" variant="secondary">
             Tous les produits
           </ButtonLink>
         </div>
@@ -214,32 +214,19 @@ export default function Home() {
         </ul>
       </Section>
 
-      {/* TEMPS FORT */}
-      {conference && (
-        <section className="px-5 py-16 sm:py-20">
-          <div className="mx-auto grid max-w-6xl items-center gap-10 overflow-hidden rounded-[2rem] bg-soil-700 text-white lg:grid-cols-[1.1fr_0.9fr]">
-            <Image
-              src={conference.src}
-              alt={conference.alt}
-              width={conference.width}
-              height={conference.height}
-              sizes="(min-width: 1024px) 55vw, 100vw"
-              className="h-full max-h-[30rem] w-full object-cover"
-            />
-            <div className="px-7 pb-10 lg:py-10 lg:pr-12">
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-sesame-300">Temps fort</p>
-              <h2 className="font-display mt-3 text-3xl font-semibold leading-tight sm:text-4xl">
-                La coopérative à la conférence sur la valorisation du beurre de karité du Tchad
-              </h2>
-              <p className="mt-4 leading-relaxed text-soil-100/90">
-                Nos membres y ont présenté le beurre de karité produit par la coopérative.
-              </p>
-              <div className="mt-7">
-                <ButtonLink href="/filieres#karite">Découvrir la filière karité</ButtonLink>
-              </div>
-            </div>
+      {/* ACTUALITÉS */}
+      {actualites.length > 0 && (
+        <Section>
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <SectionTitle eyebrow="Actualités" title="La vie de la coopérative" />
+            <ButtonLink href="/actualites" variant="secondary">
+              Toutes les actualités
+            </ButtonLink>
           </div>
-        </section>
+          <div className="mt-10">
+            <ActualiteCard a={actualites[0]} une />
+          </div>
+        </Section>
       )}
 
       {/* PROJETS */}

@@ -67,11 +67,40 @@ Dans `site.ts`, cherchez `export const produits` et copiez un produit existant :
 ```
 
 - `filiere` : l'identifiant de la filière (`oleagineux`, `karite`, `spiruline`, `ronier`, `nere`, `patate-tomate`, `cereales`, `arachide`, `formation`).
+- Le produit apparaît sur la page « Nos produits », dans le menu de sa filière.
 - Le bouton « Prix et disponibilité » ouvre automatiquement WhatsApp avec le nom du produit.
 
 ## Ajouter ou modifier une filière
 
-Dans `site.ts`, cherchez `export const filieres`. Chaque filière a un titre, une phrase courte (`tagline`), une description, la liste de ses produits et une photo. La page « Nos filières », son sommaire et l'accueil se mettent à jour tout seuls.
+Dans `site.ts`, cherchez `export const filieres`. Chaque filière a un titre, une phrase courte (`tagline`), une description, la liste de ses produits et une photo. La page « Nos filières », son menu déroulant et l'accueil se mettent à jour tout seuls.
+
+## Publier une actualité
+
+1. Déposez la photo dans `public/images/galerie/` (nom en minuscules, sans accents ni espaces).
+2. Dans `site.ts`, cherchez `export const actualites` et copiez un bloc **en haut de la liste** (la plus récente en premier) :
+
+```
+  {
+    slug: "salon-agroalimentaire-ndjamena-2026",
+    title: "La COOP-DCVA au salon agroalimentaire de N'Djaména",
+    date: "2026-11-20",
+    categorie: "Événement",
+    resume: "Une ou deux phrases qui résument l'actualité.",
+    contenu: [
+      "Premier paragraphe.",
+      "Deuxième paragraphe.",
+    ],
+    photo: { src: "/images/galerie/salon-2026.jpg", width: 1600, height: 1200, alt: "Ce que montre la photo." },
+    filiere: "karite",
+  },
+```
+
+- `slug` : l'adresse de la page, en minuscules avec des tirets (elle donne `/actualites/salon-agroalimentaire-ndjamena-2026`).
+- `date` : au format année-mois-jour. Si vous ne la connaissez pas, supprimez la ligne : aucune date ne sera affichée.
+- `categorie` : `"Événement"`, `"Formation"`, `"Produits"`, `"Projet"` ou `"Vie de la coopérative"`.
+- `filiere` (facultatif) : ajoute un bouton vers la filière concernée.
+
+La page Actualités, l'accueil (dernière actualité) et le plan du site se mettent à jour tout seuls.
 
 ## Ajouter un projet
 

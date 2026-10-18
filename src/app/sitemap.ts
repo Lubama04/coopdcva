@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { nav, projets } from "@/lib/site";
+import { actualites, nav, projets } from "@/lib/site";
 import { baseUrl } from "@/lib/seo";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -13,5 +13,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     changeFrequency: "monthly" as const,
     priority: 0.6,
   }));
-  return [...pages, ...details];
+  const news = actualites.map((a) => ({
+    url: `${baseUrl}/actualites/${a.slug}`,
+    ...(a.date ? { lastModified: a.date } : {}),
+    changeFrequency: "yearly" as const,
+    priority: 0.6,
+  }));
+  return [...pages, ...details, ...news];
 }

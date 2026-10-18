@@ -30,14 +30,14 @@ export function Header() {
           <span className="sr-only">, retour à l&apos;accueil</span>
         </Link>
 
-        <nav aria-label="Navigation principale" className="hidden lg:block">
+        <nav aria-label="Navigation principale" className="hidden xl:block">
           <ul className="flex items-center gap-1">
             {nav.map((item) => (
               <li key={item.href}>
                 <Link
                   href={item.href}
                   aria-current={isActive(item.href) ? "page" : undefined}
-                  className={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${
+                  className={`rounded-full px-3.5 py-2 text-sm font-medium transition-colors ${
                     isActive(item.href)
                       ? "bg-leaf-700 text-white"
                       : "text-ink hover:bg-leaf-50 hover:text-leaf-700"
@@ -53,7 +53,7 @@ export function Header() {
         <button
           ref={toggleRef}
           type="button"
-          className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-soil-100 text-leaf-700 lg:hidden"
+          className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-soil-100 text-leaf-700 xl:hidden"
           aria-expanded={open}
           aria-controls="menu-mobile"
           aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
@@ -70,7 +70,7 @@ export function Header() {
       </div>
 
       {open && (
-        <nav id="menu-mobile" aria-label="Navigation mobile" className="border-t border-soil-100 bg-paper lg:hidden">
+        <nav id="menu-mobile" aria-label="Navigation mobile" className="border-t border-soil-100 bg-paper xl:hidden">
           <ul className="mx-auto flex max-w-6xl flex-col px-5 py-3">
             {nav.map((item) => (
               <li key={item.href}>

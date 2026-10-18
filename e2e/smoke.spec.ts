@@ -9,6 +9,10 @@ const routes = [
   "/projets/site-de-production-gassi",
   "/projets/formation-des-membres",
   "/projets/certification-normes-sanitaires",
+  "/produits",
+  "/actualites",
+  "/actualites/conference-valorisation-beurre-de-karite-du-tchad",
+  "/actualites/renforcement-des-capacites-farine-infantile",
   "/galerie",
   "/contact",
 ];
@@ -94,11 +98,53 @@ test("formulaire : repli WhatsApp / e-mail si l'envoi échoue", async ({ page })
   await expect(page.getByRole("link", { name: "Envoyer sur WhatsApp" })).toHaveAttribute("href", /wa\.me\/23565570937/);
 });
 
-test("filières : une section par filière et commande WhatsApp par produit", async ({ page }) => {
+test("filières : le menu déroulant n'affiche que la filière choisie", async ({ page }) => {
   await page.goto("/filieres", { waitUntil: "domcontentloaded" });
-  await expect(page.locator("section[id] h2")).toHaveCount(9);
-  const commandes = page.getByRole("link", { name: /Prix et disponibilité/ });
-  await expect(commandes.first()).toHaveAttribute("href", /wa\.me\/23565570937\?text=/);
+  const sections = page.locator("section[id] h2");
+  await expect(sections).toHaveCount(9);
+  const menu = page.getByRole("combobox", { name: /Choisissez une filière/ });
+  await menu.click();
+  await page.getByRole("option", { name: "Karité" }).click();
+  await expect(sections).toHaveCount(1);
+  await expect(sections.first()).toHaveText("Karité");
+  await expect(page).toHaveURL(/\/filieres#karite$/);
+  // Keyboard: open, go to "Spiruline (dihé)" by typing, confirm.
+  await menu.focus();
+  await page.keyboard.press("Enter");
+  await expect(page.getByRole("listbox")).toBeVisible();
+  await page.keyboard.press("s");
+  await expect(page.getByRole("option", { name: "Spiruline (dihé)" })).toHaveClass(/bg-leaf-50/);
+  await page.keyboard.press("Enter");
+  await expect(sections.first()).toHaveText("Spiruline (dihé)");
+  await page.getByRole("button", { name: "Afficher toutes les filières" }).click();
+  await expect(sections).toHaveCount(9);
+});
+
+test("lien direct vers une filière : seule celle-ci est affichée", async ({ page }) => {
+  await page.goto("/filieres#nere", { waitUntil: "load" });
+  await expect(page.locator("section[id] h2")).toHaveCount(1);
+  await expect(page.locator("#nere h2")).toBeInViewport();
+});
+
+test("produits : filtre par filière et commande WhatsApp", async ({ page }) => {
+  await page.goto("/produits", { waitUntil: "domcontentloaded" });
+  const cartes = page.locator("main ul > li article");
+  const total = await cartes.count();
+  expect(total).toBeGreaterThan(4);
+  await page.getByRole("combobox", { name: /Filtrer par filière/ }).click();
+  await page.getByRole("option", { name: /^Oléagineux/ }).click();
+  await expect(cartes).toHaveCount(4);
+  await expect(page.getByRole("link", { name: /Prix et disponibilité/ }).first()).toHaveAttribute(
+    "href",
+    /wa\.me\/23565570937\?text=/,
+  );
+});
+
+test("actualités : la carte mène à l'article", async ({ page }) => {
+  await page.goto("/actualites", { waitUntil: "domcontentloaded" });
+  await page.getByRole("link", { name: /conférence sur la valorisation du beurre de karité/ }).first().click();
+  await expect(page).toHaveURL(/\/actualites\/conference-valorisation-beurre-de-karite-du-tchad$/);
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("beurre de karité");
 });
 
 test("menu mobile : s'ouvre et se ferme avec Échap", async ({ page, isMobile }) => {

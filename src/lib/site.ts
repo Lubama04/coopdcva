@@ -35,7 +35,9 @@ export const nav = [
   { href: "/", label: "Accueil" },
   { href: "/a-propos", label: "À propos" },
   { href: "/filieres", label: "Nos filières" },
+  { href: "/produits", label: "Nos produits" },
   { href: "/projets", label: "Nos projets" },
+  { href: "/actualites", label: "Actualités" },
   { href: "/galerie", label: "Galerie" },
   { href: "/contact", label: "Contact" },
 ] as const;
@@ -749,6 +751,76 @@ export const galerie: Photo[] = [
     categorie: "Huiles et karité",
   },
 ];
+
+/* ------------------------------------------------------------------ */
+/* Actualités                                                          */
+/* ------------------------------------------------------------------ */
+
+export type Actualite = {
+  slug: string;
+  title: string;
+  /** ISO date (AAAA-MM-JJ). Laisser vide si la date n'est pas connue : elle n'est alors pas affichée. */
+  date?: string;
+  categorie: "Événement" | "Formation" | "Produits" | "Projet" | "Vie de la coopérative";
+  resume: string;
+  contenu: string[];
+  photo: Visuel;
+  /** Filière liée (lien « Découvrir la filière »). */
+  filiere?: Filiere["id"];
+};
+
+/**
+ * Actualités, de la plus récente à la plus ancienne.
+ * Pour en publier une : copier un bloc, changer le texte et la photo.
+ */
+export const actualites: Actualite[] = [
+  {
+    slug: "conference-valorisation-beurre-de-karite-du-tchad",
+    title: "La COOP-DCVA à la conférence sur la valorisation du beurre de karité du Tchad",
+    categorie: "Événement",
+    resume:
+      "La coopérative a participé à la conférence sur la valorisation du beurre de karité du Tchad, où ses membres ont présenté le beurre de karité qu'elle produit.",
+    contenu: [
+      "La COOP-DCVA a pris part à la conférence sur la valorisation du beurre de karité du Tchad. Sur le stand, ses membres ont présenté le beurre de karité produit par la coopérative.",
+      "Cette participation s'inscrit dans le développement de la filière karité de la coopérative, qui propose notamment un beurre de karité à la carotte, en pot de 250 g, composé de beurre de karité, de carotte et de cire d'abeilles.",
+    ],
+    photo: {
+      src: "/images/galerie/conference-karite.jpg",
+      width: 1600,
+      height: 1200,
+      alt: "Trois femmes souriantes derrière un stand garni de pots de beurre de karité, devant un drapeau du Tchad",
+    },
+    filiere: "karite",
+  },
+  {
+    slug: "renforcement-des-capacites-farine-infantile",
+    title: "Renforcement des capacités en production de la farine infantile",
+    categorie: "Formation",
+    resume:
+      "La coopérative a mené un renforcement des capacités consacré à la production de la farine infantile.",
+    contenu: [
+      "Former ses membres est l'un des axes d'action de la COOP-DCVA. Une session de renforcement des capacités a été consacrée à la production de la farine infantile.",
+      "En blouse et charlotte, les participants présentent les produits réalisés, devant un moulin.",
+    ],
+    photo: {
+      src: "/images/galerie/farine-infantile.jpg",
+      width: 1280,
+      height: 853,
+      alt: "Cinq personnes en blouse et charlotte blanches présentent des sachets et des flacons devant un moulin vert",
+    },
+    filiere: "formation",
+  },
+];
+
+export function getActualite(slug: string): Actualite | undefined {
+  return actualites.find((a) => a.slug === slug);
+}
+
+export function dateLongue(iso: string) {
+  const [y, m, d] = iso.split("-").map(Number);
+  const mois = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"];
+  return `${d} ${mois[m - 1]} ${y}`;
+}
 
 export const videoDeshydrateur = {
   src: "/videos/deshydrateur-alimentaire.mp4",
