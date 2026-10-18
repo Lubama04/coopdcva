@@ -6,7 +6,7 @@ Ce guide explique, sans connaissances techniques, comment changer les informatio
 
 ## Comment modifier un fichier sans rien installer
 
-1. Ouvrez https://github.com/Lubama04/coopdcva et connectez-vous (un accès doit vous être donné).
+1. Ouvrez le dépôt GitHub du site et connectez-vous avec un compte autorisé.
 2. Cliquez sur le dossier `src`, puis `lib`, puis le fichier `site.ts`.
 3. Cliquez sur le **crayon** (« Edit this file »), en haut à droite.
 4. Faites votre changement, en gardant les guillemets `"…"` et les virgules.

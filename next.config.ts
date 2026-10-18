@@ -35,6 +35,7 @@ const nextConfig: NextConfig = {
   cacheComponents: true,
   partialPrefetching: true,
   poweredByHeader: false,
+  agentRules: false,
   images: {
     formats: ["image/avif", "image/webp"],
   },

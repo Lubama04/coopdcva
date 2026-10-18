@@ -48,3 +48,8 @@ tsconfig.tsbuildinfo
 /assets-originaux/
 /test-results/
 /playwright-report/
+
+# local tooling files
+CLAUDE.md
+AGENTS.md
+/.claude/

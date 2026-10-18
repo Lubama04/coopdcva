@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     title: "COOP-DCVA | Qui ne se plante pas ne pousse jamais",
     description,
   },
-  robots: { index: false, follow: false }, // Maquette : à passer en index au lancement officiel.
+  robots: { index: true, follow: true },
 };
 
 export const viewport: Viewport = {

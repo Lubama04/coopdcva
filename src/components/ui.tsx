@@ -133,7 +133,7 @@ const toneStyles: Record<Filiere["tone"], { bg: string; fg: string; chip: string
 };
 
 export function FiliereIcon({ id, className = "" }: { id: string; className?: string }) {
-  // Pictogrammes simples, dessinés pour la maquette.
+  // Simple line pictograms, one per filière.
   const common = { fill: "none", stroke: "currentColor", strokeWidth: 2.2, strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
   return (
     <svg viewBox="0 0 48 48" className={className} aria-hidden="true">

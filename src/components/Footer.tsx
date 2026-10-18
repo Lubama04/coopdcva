@@ -76,9 +76,8 @@ export function Footer() {
       </div>
 
       <div className="border-t border-white/10">
-        <div className="mx-auto flex max-w-6xl flex-col gap-2 px-5 py-5 text-xs text-leaf-100/70 sm:flex-row sm:justify-between">
+        <div className="mx-auto max-w-6xl px-5 py-5 text-xs text-leaf-100/70">
           <p>© 2026 COOP-DCVA. Tous droits réservés.</p>
-          <p>Maquette réalisée par ETS FLAUGUST BUSINESS</p>
         </div>
       </div>
     </footer>
