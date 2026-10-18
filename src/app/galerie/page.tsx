@@ -7,7 +7,7 @@ import { site, videoDeshydrateur as video } from "@/lib/site";
 export const metadata: Metadata = pageMetadata({
   title: "Galerie",
   description:
-    "La vie de la COOP-DCVA en images et en vidéo : moulins, patate douce, tomate et membres au travail à Gassi.",
+    "La COOP-DCVA en images et en vidéo : huiles végétales, beurre de karité, spiruline, rônier, néré, patate douce et tomate, moulins et formations.",
   path: "/galerie",
 });
 
@@ -17,7 +17,7 @@ export default function GaleriePage() {
       <PageHero
         eyebrow="Galerie"
         title="La coopérative en images"
-        intro="Les moulins, la patate douce, la tomate et celles qui les transforment : un aperçu du travail mené chaque jour à Gassi."
+        intro="Nos huiles, notre karité, notre spiruline, nos équipements et celles et ceux qui les font vivre : le travail de la coopérative, en photos et en vidéo."
       />
 
       <Section>

@@ -3,12 +3,15 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import {
   activites,
+  commanderHref,
+  filieres,
   membres,
   partenaires,
   soutiens,
   statutLabel,
   type Filiere,
   type Organisation,
+  type Produit,
   type Projet,
 } from "@/lib/site";
 
@@ -171,6 +174,35 @@ export function FiliereIcon({ id, className = "" }: { id: string; className?: st
           <path d="M34 8l4-3 3 5" />
         </g>
       )}
+      {id === "karite" && (
+        <g {...common}>
+          <ellipse cx="24" cy="30" rx="15" ry="9" />
+          <path d="M9 30v4c0 5 7 9 15 9s15-4 15-9v-4" />
+          <path d="M24 21c-4-6-1-12 5-15-1 6 1 9-5 15Z" />
+        </g>
+      )}
+      {id === "ronier" && (
+        <g {...common}>
+          <path d="M24 44V20" />
+          <path d="M24 20c-6-6-14-6-18-3M24 20c6-6 14-6 18-3M24 20c-3-8-9-12-15-12M24 20c3-8 9-12 15-12" />
+          <path d="M18 44c0-4 3-6 6-6s6 2 6 6" />
+        </g>
+      )}
+      {id === "nere" && (
+        <g {...common}>
+          <path d="M10 38c4-14 14-24 28-28-2 14-12 24-28 28Z" />
+          <circle cx="20" cy="30" r="1.6" />
+          <circle cx="26" cy="24" r="1.6" />
+          <circle cx="31" cy="18" r="1.6" />
+        </g>
+      )}
+      {id === "patate-tomate" && (
+        <g {...common}>
+          <circle cx="18" cy="28" r="10" />
+          <path d="M18 18c-1-3 1-6 4-7M14 19l4-1 4 1" />
+          <path d="M30 22c6-2 11 2 10 8s-7 9-12 7" />
+        </g>
+      )}
     </svg>
   );
 }
@@ -180,24 +212,85 @@ export function FiliereCard({ f, detailed = false }: { f: Filiere; detailed?: bo
   return (
     <article
       id={f.id}
-      className="group flex h-full flex-col rounded-3xl border border-soil-100 bg-paper p-6 shadow-[0_1px_0_rgba(0,0,0,0.02)] transition-all hover:-translate-y-1 hover:shadow-xl hover:shadow-leaf-900/10"
+      className="group flex h-full scroll-mt-24 flex-col overflow-hidden rounded-3xl border border-soil-100 bg-paper shadow-[0_1px_0_rgba(0,0,0,0.02)] transition-all hover:-translate-y-1 hover:shadow-xl hover:shadow-leaf-900/10"
     >
-      <div className={`flex h-16 w-16 items-center justify-center rounded-2xl ${t.bg} ${t.fg}`}>
-        <FiliereIcon id={f.id} className="h-9 w-9" />
+      <div className={`relative aspect-[4/3] overflow-hidden ${t.bg}`}>
+        {f.photo ? (
+          <Image
+            src={f.photo.src}
+            alt={f.photo.alt}
+            width={f.photo.width}
+            height={f.photo.height}
+            sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+          />
+        ) : (
+          <div className={`flex h-full items-center justify-center ${t.fg}`}>
+            <FiliereIcon id={f.id} className="h-20 w-20 opacity-80" />
+          </div>
+        )}
+        <span
+          className={`absolute bottom-3 left-3 flex h-11 w-11 items-center justify-center rounded-xl bg-paper/95 shadow-md ${t.fg}`}
+          aria-hidden="true"
+        >
+          <FiliereIcon id={f.id} className="h-7 w-7" />
+        </span>
       </div>
-      <h3 className="font-display mt-5 text-2xl font-semibold text-leaf-900">{f.title}</h3>
-      <p className={`mt-1 text-sm font-semibold ${t.fg}`}>{f.tagline}</p>
-      <p className="mt-3 text-[0.95rem] leading-relaxed text-ink-soft">{f.description}</p>
-      {detailed && (
-        <ul className="mt-5 flex flex-wrap gap-2">
-          {f.products.map((p) => (
-            <li key={p} className="inline-flex items-center gap-2 rounded-full bg-cream px-3 py-1.5 text-xs font-medium text-ink">
-              <span className={`h-2 w-2 rounded-full ${t.chip}`} aria-hidden="true" />
-              {p}
-            </li>
-          ))}
-        </ul>
-      )}
+      <div className="flex flex-1 flex-col p-6">
+        <h3 className="font-display text-2xl font-semibold text-leaf-900">{f.title}</h3>
+        <p className={`mt-1 text-sm font-semibold ${t.fg}`}>{f.tagline}</p>
+        {detailed && <p className="mt-3 text-[0.95rem] leading-relaxed text-ink-soft">{f.description}</p>}
+        {detailed && (
+          <ul className="mt-5 flex flex-wrap gap-2">
+            {f.products.map((p) => (
+              <li key={p} className="inline-flex items-center gap-2 rounded-full bg-cream px-3 py-1.5 text-xs font-medium text-ink">
+                <span className={`h-2 w-2 rounded-full ${t.chip}`} aria-hidden="true" />
+                {p}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </article>
+  );
+}
+
+/** Fiche produit : photo, libellé de l'étiquette et demande de prix par WhatsApp. */
+export function ProduitCard({ p }: { p: Produit }) {
+  const f = filieres.find((x) => x.id === p.filiere);
+  return (
+    <article className="group flex h-full flex-col overflow-hidden rounded-3xl border border-soil-100 bg-paper">
+      <div className="relative aspect-[4/5] overflow-hidden bg-[#f1efea]">
+        <Image
+          src={p.photo.src}
+          alt={p.photo.alt}
+          width={p.photo.width}
+          height={p.photo.height}
+          sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+        />
+        {f && (
+          <span className="absolute left-3 top-3 rounded-full bg-paper/95 px-3 py-1 text-xs font-semibold text-leaf-700 shadow-sm">
+            {f.title}
+          </span>
+        )}
+      </div>
+      <div className="flex flex-1 flex-col p-5">
+        <h3 className="font-display text-xl font-semibold leading-snug text-leaf-900">{p.nom}</h3>
+        <p className="mt-1 flex-1 text-sm text-ink-soft">{p.detail}</p>
+        <a
+          href={commanderHref(p.nom)}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-4 inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-[#1f7a43] px-4 text-sm font-semibold text-white transition-colors hover:bg-leaf-700"
+        >
+          <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor" aria-hidden="true">
+            <path d="M12.04 2a9.9 9.9 0 0 0-8.5 14.97L2 22l5.16-1.5A9.9 9.9 0 1 0 12.04 2Zm0 18.1a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.06.89.9-2.98-.2-.31a8.2 8.2 0 1 1 6.84 3.73Z" />
+          </svg>
+          Prix et disponibilité
+          <span className="sr-only"> pour {p.nom} sur WhatsApp</span>
+        </a>
+      </div>
     </article>
   );
 }

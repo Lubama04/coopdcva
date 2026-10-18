@@ -43,15 +43,35 @@ Le numéro WhatsApp s'écrit sans `+` ni espaces : `whatsapp: "https://wa.me/235
     title: "Séchage de la mangue",
     caption: "Ce que l'on voit sur la photo, en une phrase.",
     alt: "Description de la photo pour les personnes aveugles.",
-    categorie: "Tomate",
+    categorie: "Patate douce et tomate",
   },
 ```
 
 - `title` : le **nom officiel** de la photo, celui que vous lui donnez.
 - `width` et `height` : la taille de la photo en pixels (clic droit sur la photo → Propriétés → Détails).
-- `categorie` : `"Moulins"`, `"Patate douce"` ou `"Tomate"`. Pour une nouvelle catégorie, demandez à la personne qui gère le site.
+- `categorie` : `"Huiles et karité"`, `"Spiruline"`, `"Rônier et néré"`, `"Patate douce et tomate"`, `"Équipements"` ou `"Formation et événements"`. Pour une nouvelle catégorie, demandez à la personne qui gère le site.
 
 Conseil : envoyez des photos prises en **mode paysage ou portrait, nettes, d'au moins 1 200 pixels de large**, et seulement avec l'accord des personnes photographiées.
+
+## Ajouter un produit
+
+Dans `site.ts`, cherchez `export const produits` et copiez un produit existant :
+
+```
+  {
+    nom: "Huile de sésame",
+    detail: "Flacon de 250 ml",
+    filiere: "oleagineux",
+    photo: { src: "/images/galerie/huile-sesame.jpg", width: 1000, height: 1400, alt: "Flacon d'huile de sésame" },
+  },
+```
+
+- `filiere` : l'identifiant de la filière (`oleagineux`, `karite`, `spiruline`, `ronier`, `nere`, `patate-tomate`, `cereales`, `arachide`, `formation`).
+- Le bouton « Prix et disponibilité » ouvre automatiquement WhatsApp avec le nom du produit.
+
+## Ajouter ou modifier une filière
+
+Dans `site.ts`, cherchez `export const filieres`. Chaque filière a un titre, une phrase courte (`tagline`), une description, la liste de ses produits et une photo. La page « Nos filières », son sommaire et l'accueil se mettent à jour tout seuls.
 
 ## Ajouter un projet
 

@@ -91,6 +91,8 @@ export const activites: Activite[] = [
   },
 ];
 
+export type Visuel = { src: string; width: number; height: number; alt: string };
+
 export type Filiere = {
   id: string;
   title: string;
@@ -98,9 +100,111 @@ export type Filiere = {
   description: string;
   products: string[];
   tone: "green" | "gold" | "brown" | "teal" | "clay";
+  /** Absent when no photo of this filière has been provided yet. */
+  photo?: Visuel;
 };
 
+/**
+ * Filières de la coopérative : fiche de présentation, puis noms des photos
+ * envoyées par la coopérative (dossier Image) et mentions lisibles sur les étiquettes.
+ */
 export const filieres: Filiere[] = [
+  {
+    id: "oleagineux",
+    title: "Oléagineux et huiles végétales",
+    tagline: "Savonnier (balanite), neem, ricin, citron, sésame",
+    description:
+      "Avec sa presse à huile motorisée et sa mini presse à huile, la coopérative et ses membres produisent des huiles végétales du Tchad : huile prodigieuse du savonnier, tirée des amandes du fruit du savonnier (balanite), huile de neem, huile de ricin, huile végétale de citron et huile de sésame.",
+    products: [
+      "Huile prodigieuse du savonnier (balanite)",
+      "Huile de neem",
+      "Huile de ricin",
+      "Huile végétale de citron",
+      "Huile de sésame",
+    ],
+    tone: "gold",
+    photo: {
+      src: "/images/galerie/filieres-oleagineuses.jpg",
+      width: 712,
+      height: 591,
+      alt: "Bouteilles d'huile prodigieuse du savonnier et d'huile de balanite alignées sur une étagère",
+    },
+  },
+  {
+    id: "karite",
+    title: "Karité",
+    tagline: "Le beurre de karité du Tchad",
+    description:
+      "La coopérative valorise le beurre de karité du Tchad. Elle le propose notamment en beurre de karité à la carotte, composé de beurre de karité, de carotte et de cire d'abeilles, en pot de 250 g. Elle a participé à la conférence sur la valorisation du beurre de karité du Tchad.",
+    products: ["Beurre de karité", "Beurre de karité carotte (250 g)"],
+    tone: "clay",
+    photo: {
+      src: "/images/galerie/beurre-karite-carotte.jpg",
+      width: 1260,
+      height: 1400,
+      alt: "Pot de beurre de karité carotte de 250 g, étiqueté COOP-DCVA",
+    },
+  },
+  {
+    id: "spiruline",
+    title: "Spiruline (dihé)",
+    tagline: "Diyé du Tchad, issue du lac Tchad",
+    description:
+      "La spiruline du lac Tchad, appelée dihé, est conditionnée par la coopérative en sachets de 1 kg sous le nom « Diyé du Tchad (Spiruline) », issue des sources naturelles du lac Tchad. L'étiquette la présente comme complément alimentaire et agent cosmétique.",
+    products: ["Diyé du Tchad (spiruline), sachet de 1 kg"],
+    tone: "teal",
+    photo: {
+      src: "/images/galerie/spiruline-dihe-du-tchad.jpg",
+      width: 940,
+      height: 893,
+      alt: "Sachet de 1 kg de Diyé du Tchad (spiruline) étiqueté COOP-DCVA, rempli de poudre verte",
+    },
+  },
+  {
+    id: "ronier",
+    title: "Tubercule de rônier",
+    tagline: "Farine de tubercule de rônier",
+    description:
+      "La coopérative transforme le tubercule de rônier en farine. Elle est conditionnée en sachets sous le nom « Poudre de Djabra », sous la marque COOP-DCVA et sous celle de MaPerle, membre de la coopérative.",
+    products: ["Farine de tubercule de rônier (Poudre de Djabra)"],
+    tone: "brown",
+    photo: {
+      src: "/images/galerie/farine-tubercule-ronier.jpg",
+      width: 1280,
+      height: 591,
+      alt: "Une vingtaine de sachets de Poudre de Djabra aux marques COOP-DCVA et MaPerle",
+    },
+  },
+  {
+    id: "nere",
+    title: "Néré",
+    tagline: "Valorisation des produits non ligneux (PNL)",
+    description:
+      "Dans le cadre de la valorisation des produits non ligneux, la coopérative transforme les graines de néré : Ndii Dawdawa en sachets de 150 g sous la marque COOP-DCVA, et Soum-mbala « Sauce du chef » chez MaPerle, membre de la coopérative.",
+    products: ["Ndii Dawdawa (150 g)", "Soum-mbala « Sauce du chef »"],
+    tone: "green",
+    photo: {
+      src: "/images/galerie/nere-pnl.jpg",
+      width: 1280,
+      height: 591,
+      alt: "Sachets de Ndii Dawdawa de 150 g, un sachet de Soum-mbala et des pots d'épices",
+    },
+  },
+  {
+    id: "patate-tomate",
+    title: "Patate douce et tomate",
+    tagline: "Séchage et transformation",
+    description:
+      "Grâce au déshydrateur alimentaire, la tomate coupée en morceaux et les lamelles de patate douce sont séchées sur claies. La patate douce est aussi transformée en beignets par les membres.",
+    products: ["Tomate séchée", "Patate douce séchée", "Beignets de patate douce"],
+    tone: "clay",
+    photo: {
+      src: "/images/galerie/tomate-en-transformation.jpg",
+      width: 486,
+      height: 1080,
+      alt: "Trois femmes en tenue bleue et blanche devant une grande claie couverte de tomate coupée en morceaux",
+    },
+  },
   {
     id: "cereales",
     title: "Céréales",
@@ -109,15 +213,12 @@ export const filieres: Filiere[] = [
       "Nous transformons les céréales cultivées au Tchad : mouture de la farine de maïs, décorticage et valorisation du riz local, transformation du sorgho.",
     products: ["Farine de maïs", "Riz local décortiqué", "Sorgho transformé"],
     tone: "gold",
-  },
-  {
-    id: "oleagineux",
-    title: "Oléagineux",
-    tagline: "Sésame, balanites et karité",
-    description:
-      "Notre presse à huile motorisée valorise les graines oléagineuses du pays : huile de sésame, huile de balanites et beurre de karité.",
-    products: ["Huile de sésame", "Huile de balanites", "Beurre de karité"],
-    tone: "brown",
+    photo: {
+      src: "/images/galerie/moulin-farine-2.jpg",
+      width: 521,
+      height: 1156,
+      alt: "Un homme penché sur le moulin à farine vert",
+    },
   },
   {
     id: "arachide",
@@ -126,33 +227,96 @@ export const filieres: Filiere[] = [
     description:
       "L'arachide est transformée puis commercialisée par nos membres, de la matière première jusqu'au consommateur.",
     products: ["Arachide transformée"],
-    tone: "clay",
-  },
-  {
-    id: "spiruline",
-    title: "Spiruline (dihé)",
-    tagline: "Un trésor du lac Tchad",
-    description:
-      "La spiruline du lac Tchad, appelée dihé, est transformée et conditionnée par la coopérative pour être proposée dans de bonnes conditions d'hygiène.",
-    products: ["Spiruline (dihé) conditionnée"],
-    tone: "teal",
+    tone: "brown",
   },
   {
     id: "formation",
     title: "Formation",
-    tagline: "Transmettre les savoir-faire",
+    tagline: "Renforcer les capacités des membres",
     description:
-      "Une formatrice accompagne nos membres dans les techniques de transformation, pour améliorer la qualité des produits et renforcer l'autonomie de chacune.",
-    products: ["Techniques de transformation", "Accompagnement des membres"],
+      "Une formatrice accompagne les membres dans les techniques de transformation. La coopérative mène notamment le renforcement des capacités en production de la farine infantile.",
+    products: ["Production de farine infantile", "Techniques de transformation", "Accompagnement des membres"],
     tone: "green",
+    photo: {
+      src: "/images/galerie/farine-infantile.jpg",
+      width: 1280,
+      height: 853,
+      alt: "Cinq personnes en blouse et charlotte blanches présentent des sachets et des flacons devant un moulin vert",
+    },
   },
 ];
 
+export type Produit = {
+  nom: string;
+  detail: string;
+  filiere: Filiere["id"];
+  photo: Visuel;
+};
+
+/** Produits photographiés par la coopérative ; libellés repris des étiquettes. */
+export const produits: Produit[] = [
+  {
+    nom: "Beurre de karité carotte",
+    detail: "Pot de 250 g · beurre de karité, carotte, cire d'abeilles",
+    filiere: "karite",
+    photo: { src: "/images/galerie/beurre-karite-carotte.jpg", width: 1260, height: 1400, alt: "Pot de beurre de karité carotte de 250 g" },
+  },
+  {
+    nom: "Huile prodigieuse du savonnier",
+    detail: "Huile des amandes du fruit du savonnier (balanite) · Made in Chad",
+    filiere: "oleagineux",
+    photo: { src: "/images/galerie/huile-savonnier.jpg", width: 873, height: 1400, alt: "Flacon d'huile prodigieuse du savonnier" },
+  },
+  {
+    nom: "Huile de neem",
+    detail: "Huile végétale",
+    filiere: "oleagineux",
+    photo: { src: "/images/galerie/huile-neem.jpg", width: 946, height: 1400, alt: "Flacon d'huile végétale de neem" },
+  },
+  {
+    nom: "Huile de ricin",
+    detail: "Huile végétale",
+    filiere: "oleagineux",
+    photo: { src: "/images/galerie/huile-ricin.jpg", width: 1053, height: 1400, alt: "Flacon d'huile de ricin" },
+  },
+  {
+    nom: "Huile végétale de citron",
+    detail: "100 % naturelle · flacon vaporisateur",
+    filiere: "oleagineux",
+    photo: { src: "/images/galerie/huile-citron-2.jpg", width: 1007, height: 1400, alt: "Flacon vaporisateur d'huile végétale de citron" },
+  },
+  {
+    nom: "Diyé du Tchad (spiruline)",
+    detail: "Sachet de 1 kg · sources naturelles du lac Tchad",
+    filiere: "spiruline",
+    photo: { src: "/images/galerie/spiruline-dihe-du-tchad.jpg", width: 940, height: 893, alt: "Sachet de 1 kg de Diyé du Tchad" },
+  },
+  {
+    nom: "Poudre de Djabra",
+    detail: "Farine de tubercule de rônier · sachets",
+    filiere: "ronier",
+    photo: { src: "/images/galerie/farine-tubercule-ronier.jpg", width: 1280, height: 591, alt: "Sachets de Poudre de Djabra" },
+  },
+  {
+    nom: "Ndii Dawdawa",
+    detail: "Néré · sachet de 150 g",
+    filiere: "nere",
+    photo: { src: "/images/galerie/nere-pnl.jpg", width: 1280, height: 591, alt: "Sachets de Ndii Dawdawa de 150 g" },
+  },
+];
+
+export function commanderHref(nom: string) {
+  return `${site.whatsapp}?text=${encodeURIComponent(
+    `Bonjour COOP-DCVA, je souhaite des informations (prix, disponibilité) sur : ${nom}.`,
+  )}`;
+}
+
 export const equipements = [
   { title: "Moulin à farine", note: "Opérationnel" },
-  { title: "Presse à huile motorisée", note: "Pour sésame, balanites, karité" },
+  { title: "Presse à huile motorisée", note: "Graines et amandes oléagineuses" },
+  { title: "Mini presse à huile", note: "Extraction d'huiles végétales" },
   { title: "Moulin à dépéliculer le maïs et autres céréales", note: "Maïs et autres céréales" },
-  { title: "Déshydrateur alimentaire", note: "Séchage et conservation" },
+  { title: "Déshydrateur alimentaire", note: "Séchage de la tomate, de la patate douce…" },
   { title: "Site de production sécurisé", note: "Quartier Gassi, N'Djaména" },
 ];
 
@@ -177,9 +341,9 @@ export const valeurs = [
 
 export const chiffres = [
   { value: "2023", label: "Année de création" },
-  { value: "5", label: "Filières actives" },
-  { value: "4", label: "Projets de la coopérative" },
-  { value: "4", label: "Équipements de transformation" },
+  { value: String(filieres.length), label: "Filières" },
+  { value: String(produits.length), label: "Produits présentés" },
+  { value: String(equipements.length - 1), label: "Équipements de transformation" },
 ];
 
 export const equipe = [
@@ -294,7 +458,7 @@ export const projets: Projet[] = [
     subtitle: "Un outil de transformation en activité",
     statut: "en-cours",
     summary:
-      "Un site sécurisé au quartier Gassi, équipé d'un moulin à farine, d'une presse à huile motorisée, d'un moulin à dépéliculer le maïs et autres céréales et d'un déshydrateur alimentaire.",
+      "Un site sécurisé au quartier Gassi, équipé d'un moulin à farine, d'une presse à huile motorisée, d'une mini presse à huile, d'un moulin à dépéliculer le maïs et autres céréales et d'un déshydrateur alimentaire.",
     description: [
       "Le site de Gassi est le cœur de la coopérative. C'est là que les céréales, les graines oléagineuses et la spiruline sont transformées et conditionnées.",
       "Son équipement a été réuni grâce à un financement de l'USAID.",
@@ -307,7 +471,7 @@ export const projets: Projet[] = [
     details: [
       { label: "Lieu", value: "Quartier Gassi, N'Djaména" },
       { label: "Moulin à farine", value: "Opérationnel" },
-      { label: "Presse à huile", value: "Motorisée" },
+      { label: "Presse à huile", value: "Motorisée + mini presse" },
       { label: "Financement", value: "USAID" },
     ],
     tone: "brown",
@@ -367,25 +531,43 @@ export function getProjet(slug: string): Projet | undefined {
 /* Galerie                                                             */
 /* ------------------------------------------------------------------ */
 
-export type Categorie = "Moulins" | "Patate douce" | "Tomate";
+export type Categorie =
+  | "Huiles et karité"
+  | "Spiruline"
+  | "Rônier et néré"
+  | "Patate douce et tomate"
+  | "Équipements"
+  | "Formation et événements";
 
-export const galerieCategories: Categorie[] = ["Moulins", "Patate douce", "Tomate"];
+export const galerieCategories: Categorie[] = [
+  "Huiles et karité",
+  "Spiruline",
+  "Rônier et néré",
+  "Patate douce et tomate",
+  "Équipements",
+  "Formation et événements",
+];
 
-export type Photo = {
-  src: string;
-  width: number;
-  height: number;
+export type Photo = Visuel & {
   title: string;
   caption: string;
-  alt: string;
   categorie: Categorie;
 };
 
 /**
- * Titres = noms exacts des fichiers fournis par la coopérative (dossier Coop-DCVA/Image).
+ * Titres = noms des fichiers fournis par la coopérative (dossier Coop-DCVA/Image).
  * Pour ajouter une photo : la déposer dans public/images/galerie puis ajouter une ligne ici.
  */
 export const galerie: Photo[] = [
+  {
+    src: "/images/galerie/conference-karite.jpg",
+    width: 1600,
+    height: 1200,
+    title: "Participation à la conférence sur la valorisation du beurre de karité du Tchad",
+    caption: "Une photo significative de la participation de la coopérative à la conférence sur la valorisation du beurre de karité du Tchad.",
+    alt: "Trois femmes souriantes derrière un stand garni de pots de beurre de karité, devant un drapeau du Tchad",
+    categorie: "Formation et événements",
+  },
   {
     src: "/images/galerie/depeliculer-1.jpg",
     width: 521,
@@ -393,7 +575,34 @@ export const galerie: Photo[] = [
     title: "Moulin à dépéliculer le maïs et autres céréales (1)",
     caption: "Le moulin à dépéliculer le maïs et autres céréales, au site de Gassi.",
     alt: "Trois personnes autour d'un moulin à dépéliculer rouge, les mains dans le grain",
-    categorie: "Moulins",
+    categorie: "Équipements",
+  },
+  {
+    src: "/images/galerie/beurre-karite-carotte.jpg",
+    width: 1260,
+    height: 1400,
+    title: "Beurre de karité et carotte",
+    caption: "Beurre de karité carotte en pot de 250 g : beurre de karité, carotte et cire d'abeilles.",
+    alt: "Pot de beurre de karité carotte de 250 g, étiqueté COOP-DCVA",
+    categorie: "Huiles et karité",
+  },
+  {
+    src: "/images/galerie/spiruline-dihe-du-tchad.jpg",
+    width: 940,
+    height: 893,
+    title: "Spiruline, Dihé du Tchad",
+    caption: "La Diyé du Tchad (spiruline), issue des sources naturelles du lac Tchad, en sachet de 1 kg.",
+    alt: "Sachet de 1 kg de Diyé du Tchad (spiruline) étiqueté COOP-DCVA, rempli de poudre verte",
+    categorie: "Spiruline",
+  },
+  {
+    src: "/images/galerie/farine-infantile.jpg",
+    width: 1280,
+    height: 853,
+    title: "Renforcement des capacités en production de la farine infantile",
+    caption: "Les participants présentent les produits réalisés, devant le moulin.",
+    alt: "Cinq personnes en blouse et charlotte blanches présentent des sachets et des flacons devant un moulin vert",
+    categorie: "Formation et événements",
   },
   {
     src: "/images/galerie/tomate-en-transformation.jpg",
@@ -402,7 +611,25 @@ export const galerie: Photo[] = [
     title: "Tomate en transformation",
     caption: "Des membres disposent la tomate coupée en morceaux sur la claie.",
     alt: "Trois femmes en tenue bleue et blanche devant une grande claie couverte de tomate coupée en morceaux",
-    categorie: "Tomate",
+    categorie: "Patate douce et tomate",
+  },
+  {
+    src: "/images/galerie/huile-savonnier.jpg",
+    width: 873,
+    height: 1400,
+    title: "Huile prodigieuse du savonnier",
+    caption: "L'huile prodigieuse du savonnier, fabriquée au Tchad.",
+    alt: "Flacon d'huile prodigieuse du savonnier",
+    categorie: "Huiles et karité",
+  },
+  {
+    src: "/images/galerie/farine-tubercule-ronier.jpg",
+    width: 1280,
+    height: 591,
+    title: "Farine de tubercule de rônier",
+    caption: "Filière tubercule de rônier : la farine, conditionnée en sachets de Poudre de Djabra.",
+    alt: "Une vingtaine de sachets de Poudre de Djabra aux marques COOP-DCVA et MaPerle",
+    categorie: "Rônier et néré",
   },
   {
     src: "/images/galerie/moulin-farine-2.jpg",
@@ -411,7 +638,25 @@ export const galerie: Photo[] = [
     title: "Moulin à farine (2)",
     caption: "Le moulin à farine de la coopérative.",
     alt: "Un homme penché sur le moulin à farine vert",
-    categorie: "Moulins",
+    categorie: "Équipements",
+  },
+  {
+    src: "/images/galerie/huile-neem.jpg",
+    width: 946,
+    height: 1400,
+    title: "Huile de Neem",
+    caption: "Huile végétale de neem.",
+    alt: "Flacon d'huile végétale de neem",
+    categorie: "Huiles et karité",
+  },
+  {
+    src: "/images/galerie/nere-pnl.jpg",
+    width: 1280,
+    height: 591,
+    title: "Valorisation des PNL — filière néré",
+    caption: "Ndii Dawdawa en sachets de 150 g et Soum-mbala « Sauce du chef ».",
+    alt: "Sachets de Ndii Dawdawa de 150 g, un sachet de Soum-mbala et des pots d'épices",
+    categorie: "Rônier et néré",
   },
   {
     src: "/images/galerie/beignets-patate-douce.jpg",
@@ -420,7 +665,34 @@ export const galerie: Photo[] = [
     title: "Beignets de patate douce",
     caption: "Des beignets de patate douce fabriqués par les membres.",
     alt: "Un grand plat rempli de beignets de patate douce torsadés",
-    categorie: "Patate douce",
+    categorie: "Patate douce et tomate",
+  },
+  {
+    src: "/images/galerie/filieres-oleagineuses.jpg",
+    width: 712,
+    height: 591,
+    title: "Nos filières oléagineuses",
+    caption: "Huile prodigieuse du savonnier et huile de balanite, tirée des amandes du fruit du savonnier.",
+    alt: "Bouteilles d'huile prodigieuse du savonnier et d'huile de balanite alignées sur une étagère",
+    categorie: "Huiles et karité",
+  },
+  {
+    src: "/images/galerie/mini-presse-huile.jpg",
+    width: 444,
+    height: 951,
+    title: "Mini Presse huile",
+    caption: "La mini presse à huile de la coopérative.",
+    alt: "Une mini presse à huile en inox posée sur une table",
+    categorie: "Équipements",
+  },
+  {
+    src: "/images/galerie/spiruline-du-tchad.jpg",
+    width: 1080,
+    height: 500,
+    title: "Spiruline du Tchad",
+    caption: "Sachets de Diyé du Tchad (spiruline) présentés lors d'une exposition.",
+    alt: "Sachets de spiruline étiquetés COOP-DCVA sur une table d'exposition",
+    categorie: "Spiruline",
   },
   {
     src: "/images/galerie/moulin-farine-1.jpg",
@@ -429,7 +701,16 @@ export const galerie: Photo[] = [
     title: "Moulin à farine (1)",
     caption: "Une membre de la coopérative à côté du moulin à farine.",
     alt: "Une femme debout à côté du moulin à farine vert",
-    categorie: "Moulins",
+    categorie: "Équipements",
+  },
+  {
+    src: "/images/galerie/huile-citron.jpg",
+    width: 1280,
+    height: 591,
+    title: "Huile de citron",
+    caption: "Flacons d'huile végétale de citron, 100 % naturelle.",
+    alt: "Rangée de flacons d'huile végétale de citron",
+    categorie: "Huiles et karité",
   },
   {
     src: "/images/galerie/transformation-patate-douce.jpg",
@@ -438,7 +719,16 @@ export const galerie: Photo[] = [
     title: "Transformation de la patate douce",
     caption: "La patate douce en cours de transformation, séchée sur la claie.",
     alt: "Des lamelles de patate douce séchant sur une claie à maille verte",
-    categorie: "Patate douce",
+    categorie: "Patate douce et tomate",
+  },
+  {
+    src: "/images/galerie/huile-ricin.jpg",
+    width: 1053,
+    height: 1400,
+    title: "Huile de Ricin",
+    caption: "Huile de ricin.",
+    alt: "Flacon d'huile de ricin",
+    categorie: "Huiles et karité",
   },
   {
     src: "/images/galerie/depeliculer-2.jpg",
@@ -447,7 +737,16 @@ export const galerie: Photo[] = [
     title: "Moulin à dépéliculer le maïs et autres céréales (2)",
     caption: "Une membre de la coopérative à côté du moulin à dépéliculer.",
     alt: "Une femme en tenue imprimée rose posant à côté d'un moulin rouge",
-    categorie: "Moulins",
+    categorie: "Équipements",
+  },
+  {
+    src: "/images/galerie/huile-citron-2.jpg",
+    width: 1007,
+    height: 1400,
+    title: "Huile de citron (2)",
+    caption: "Huile végétale de citron en flacon vaporisateur.",
+    alt: "Flacon vaporisateur d'huile végétale de citron",
+    categorie: "Huiles et karité",
   },
 ];
 

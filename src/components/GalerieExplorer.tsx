@@ -57,7 +57,7 @@ export function GalerieExplorer() {
 
   return (
     <div>
-      <div role="group" aria-label="Filtrer les photos" className="flex flex-wrap gap-2">
+      <div role="group" aria-label="Filtrer les photos" className="-mx-5 flex gap-2 overflow-x-auto px-5 pb-2 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0">
         {filtres.map((f) => {
           const actif = filtre === f;
           const n = f === "Toutes" ? galerie.length : galerie.filter((p) => p.categorie === f).length;
@@ -67,7 +67,7 @@ export function GalerieExplorer() {
               type="button"
               aria-pressed={actif}
               onClick={() => setFiltre(f)}
-              className={`min-h-11 rounded-full border px-5 py-2 text-sm font-semibold transition-colors ${
+              className={`min-h-11 shrink-0 rounded-full border px-5 py-2 text-sm font-semibold transition-colors ${
                 actif
                   ? "border-leaf-700 bg-leaf-700 text-white"
                   : "border-soil-100 bg-paper text-ink hover:border-leaf-500 hover:text-leaf-700"

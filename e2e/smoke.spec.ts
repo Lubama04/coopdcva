@@ -50,16 +50,16 @@ test("page inconnue : 404", async ({ page }) => {
 test("galerie : filtre puis visionneuse au clavier, focus rendu", async ({ page }) => {
   const errors = collectErrors(page);
   await page.goto("/galerie", { waitUntil: "domcontentloaded" });
-  await page.getByRole("button", { name: /^Tomate/ }).click();
+  await page.getByRole("button", { name: /^Spiruline/ }).click();
   const vignettes = page.locator("ul button[aria-haspopup='dialog']");
-  await expect(vignettes).toHaveCount(1);
+  await expect(vignettes).toHaveCount(2);
   await page.getByRole("button", { name: /^Toutes/ }).click();
   await vignettes.first().click();
   const dialog = page.getByRole("dialog");
   await expect(dialog).toBeVisible();
-  await expect(dialog.getByText("1 / 7")).toBeVisible();
+  await expect(dialog.getByText(/^1 \/ \d+$/)).toBeVisible();
   await page.keyboard.press("ArrowRight");
-  await expect(dialog.getByText("2 / 7")).toBeVisible();
+  await expect(dialog.getByText(/^2 \/ \d+$/)).toBeVisible();
   await page.keyboard.press("Escape");
   await expect(dialog).toBeHidden();
   await expect(vignettes.nth(1)).toBeFocused();
@@ -92,6 +92,13 @@ test("formulaire : repli WhatsApp / e-mail si l'envoi échoue", async ({ page })
   await page.getByRole("button", { name: "Envoyer mon message" }).click();
   await expect(page.getByRole("button", { name: "Réessayer" })).toBeVisible();
   await expect(page.getByRole("link", { name: "Envoyer sur WhatsApp" })).toHaveAttribute("href", /wa\.me\/23565570937/);
+});
+
+test("filières : une section par filière et commande WhatsApp par produit", async ({ page }) => {
+  await page.goto("/filieres", { waitUntil: "domcontentloaded" });
+  await expect(page.locator("section[id] h2")).toHaveCount(9);
+  const commandes = page.getByRole("link", { name: /Prix et disponibilité/ });
+  await expect(commandes.first()).toHaveAttribute("href", /wa\.me\/23565570937\?text=/);
 });
 
 test("menu mobile : s'ouvre et se ferme avec Échap", async ({ page, isMobile }) => {

@@ -4,6 +4,7 @@ import {
   ActivitesGrid,
   ButtonLink,
   FiliereCard,
+  ProduitCard,
   ProjetCard,
   Reseau,
   Section,
@@ -15,23 +16,26 @@ import {
   equipements,
   galerie,
   filieres,
+  produits,
   projets,
   site,
   valeurs,
   whatsappHref,
 } from "@/lib/site";
 
-/** Bande « En images » : un moulin, la tomate, la patate douce, une membre. */
+/** Bande « En images » : un moulin avec des membres, la patate douce, une huile, la spiruline. */
 const enImages = [
   "/images/galerie/depeliculer-1.jpg",
-  "/images/galerie/tomate-en-transformation.jpg",
   "/images/galerie/transformation-patate-douce.jpg",
-  "/images/galerie/moulin-farine-1.jpg",
+  "/images/galerie/huile-savonnier.jpg",
+  "/images/galerie/spiruline-dihe-du-tchad.jpg",
 ].map((src) => galerie.find((p) => p.src === src)!);
+
+const conference = galerie.find((p) => p.src.endsWith("conference-karite.jpg"));
 
 const heroPhotos = {
   a: galerie.find((p) => p.src.endsWith("tomate-en-transformation.jpg"))!,
-  b: galerie.find((p) => p.src.endsWith("beignets-patate-douce.jpg"))!,
+  b: galerie.find((p) => p.src.endsWith("beurre-karite-carotte.jpg"))!,
 };
 
 export default function Home() {
@@ -168,25 +172,75 @@ export default function Home() {
 
       {/* FILIÈRES */}
       <Section>
-        <SectionTitle
-          eyebrow="Nos filières"
-          title="Cinq filières actives, de la graine au produit fini"
-          intro="Chacune s'appuie sur des ressources du pays et sur le savoir-faire de nos membres."
-        />
-        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <SectionTitle
+            eyebrow="Nos filières"
+            title={`${filieres.length} filières, de la graine au produit fini`}
+            intro="Huiles végétales, karité, spiruline, rônier, néré, patate douce et tomate, céréales, arachide et formation."
+          />
+          <ButtonLink href="/filieres" variant="secondary">
+            Toutes les filières
+          </ButtonLink>
+        </div>
+        <ul className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {filieres.map((f) => (
-            <FiliereCard key={f.id} f={f} />
+            <li key={f.id}>
+              <Link href={`/filieres#${f.id}`} className="block h-full rounded-3xl">
+                <FiliereCard f={f} />
+              </Link>
+            </li>
           ))}
-          <div className="flex flex-col justify-between rounded-3xl bg-leaf-700 p-6 text-white">
-            <p className="font-display text-2xl leading-snug">
-              Découvrez les produits de chaque filière et nos méthodes de transformation.
-            </p>
-            <div className="mt-6">
-              <ButtonLink href="/filieres">Voir toutes les filières</ButtonLink>
+        </ul>
+      </Section>
+
+      {/* PRODUITS */}
+      <Section className="bg-leaf-50">
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <SectionTitle
+            eyebrow="Nos produits"
+            title="Fabriqués au Tchad, prêts à commander"
+            intro="Prix et disponibilités sur simple message WhatsApp."
+          />
+          <ButtonLink href="/filieres#produits" variant="secondary">
+            Tous les produits
+          </ButtonLink>
+        </div>
+        <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {produits.slice(0, 4).map((p) => (
+            <li key={p.nom}>
+              <ProduitCard p={p} />
+            </li>
+          ))}
+        </ul>
+      </Section>
+
+      {/* TEMPS FORT */}
+      {conference && (
+        <section className="px-5 py-16 sm:py-20">
+          <div className="mx-auto grid max-w-6xl items-center gap-10 overflow-hidden rounded-[2rem] bg-soil-700 text-white lg:grid-cols-[1.1fr_0.9fr]">
+            <Image
+              src={conference.src}
+              alt={conference.alt}
+              width={conference.width}
+              height={conference.height}
+              sizes="(min-width: 1024px) 55vw, 100vw"
+              className="h-full max-h-[30rem] w-full object-cover"
+            />
+            <div className="px-7 pb-10 lg:py-10 lg:pr-12">
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-sesame-300">Temps fort</p>
+              <h2 className="font-display mt-3 text-3xl font-semibold leading-tight sm:text-4xl">
+                La coopérative à la conférence sur la valorisation du beurre de karité du Tchad
+              </h2>
+              <p className="mt-4 leading-relaxed text-soil-100/90">
+                Nos membres y ont présenté le beurre de karité produit par la coopérative.
+              </p>
+              <div className="mt-7">
+                <ButtonLink href="/filieres#karite">Découvrir la filière karité</ButtonLink>
+              </div>
             </div>
           </div>
-        </div>
-      </Section>
+        </section>
+      )}
 
       {/* PROJETS */}
       <Section>
