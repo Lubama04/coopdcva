@@ -314,12 +314,12 @@ export const galerie: Photo[] = [
     categorie: "Production",
   },
   {
-    src: "/images/galerie/sechage-tomates.jpg",
+    src: "/images/galerie/tomates-en-morceaux.jpg",
     width: 486,
     height: 1080,
-    title: "Tomates à sécher",
-    caption: "Des tranches de tomate étalées sur une claie, avant le séchage.",
-    alt: "Trois femmes en tenue bleue et blanche devant une grande claie couverte de tranches de tomate",
+    title: "Tomates coupées en morceaux",
+    caption: "Les tomates sont coupées en morceaux et étalées sur la claie, prêtes pour la déshydratation.",
+    alt: "Trois femmes en tenue bleue et blanche devant une grande claie couverte de tomates coupées en morceaux",
     categorie: "Séchage",
   },
   {
@@ -350,12 +350,12 @@ export const galerie: Photo[] = [
     categorie: "Équipe",
   },
   {
-    src: "/images/galerie/produit-seche.jpg",
+    src: "/images/galerie/patate-sechage.jpg",
     width: 1038,
     height: 1133,
-    title: "Séchage sur claie",
-    caption: "Un produit en fines lamelles, séché sur une claie avant conditionnement.",
-    alt: "Un tas de lamelles claires séchant sur une claie à maille verte",
+    title: "Patate en transformation",
+    caption: "La patate, découpée en fines lamelles, est séchée sur une claie avant conditionnement.",
+    alt: "Des lamelles de patate séchant sur une claie à maille verte",
     categorie: "Séchage",
   },
   {
@@ -372,7 +372,7 @@ export const galerie: Photo[] = [
 export const videoDeshydrateur = {
   src: "/videos/deshydrateur-alimentaire.mp4",
   poster: "/images/galerie/deshydrateur-poster.jpg",
-  title: "Le déshydrateur alimentaire en action",
+  title: "Déshydratation de la tomate",
   caption:
-    "Des membres chargent les claies dans le déshydrateur pour sécher et conserver les produits.",
+    "Séance de déshydratation de la tomate coupée en morceaux dans le déshydrateur alimentaire.",
 };
