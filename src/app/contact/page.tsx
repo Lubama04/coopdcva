@@ -1,13 +1,18 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { ContactForm } from "@/components/ContactForm";
 import { PageHero, Section, SectionTitle } from "@/components/ui";
-import { site } from "@/lib/site";
+import { WhatsAppIcon } from "@/components/WhatsAppButton";
+import { site, whatsappHref } from "@/lib/site";
 
-export const metadata: Metadata = {
+const lieu = "Quartier Gassi, N'Djaména, Tchad";
+
+export const metadata: Metadata = pageMetadata({
   title: "Contact",
   description:
     "Contacter la COOP-DCVA : quartier Gassi, N'Djaména. Téléphone, e-mail et formulaire de contact.",
-};
+  path: "/contact",
+});
 
 export default function ContactPage() {
   return (
@@ -20,6 +25,20 @@ export default function ContactPage() {
       <Section>
         <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr]">
           <div className="space-y-5">
+            <a
+              href={whatsappHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-4 rounded-3xl bg-[#1f7a43] p-6 text-white shadow-lg shadow-leaf-900/15 transition-colors hover:bg-leaf-700"
+            >
+              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white/15">
+                <WhatsAppIcon className="h-7 w-7" />
+              </span>
+              <span>
+                <span className="font-display block text-xl font-semibold">Écrire sur WhatsApp</span>
+                <span className="text-sm text-white/90">Le moyen le plus rapide de nous joindre · {site.phone}</span>
+              </span>
+            </a>
             <div className="rounded-3xl border border-soil-100 bg-paper p-6">
               <h2 className="font-display text-xl font-semibold text-leaf-900">Adresse</h2>
               <p className="mt-2 text-ink-soft">{site.addressDetail}, Tchad</p>
@@ -52,7 +71,10 @@ export default function ContactPage() {
 
           <div className="rounded-3xl border border-soil-100 bg-paper p-8 shadow-lg shadow-leaf-900/5">
             <h2 className="font-display text-2xl font-semibold text-leaf-900">Envoyer un message</h2>
-            <p className="mb-6 mt-1 text-sm text-ink-soft">Tous les champs sont nécessaires.</p>
+            <p className="mb-6 mt-1 text-sm text-ink-soft">
+              Tous les champs sont nécessaires. Votre message s&apos;ouvre dans WhatsApp ou dans
+              votre messagerie, prêt à envoyer.
+            </p>
             <ContactForm />
           </div>
         </div>
@@ -63,22 +85,33 @@ export default function ContactPage() {
           <div className="mt-6 overflow-hidden rounded-3xl border border-soil-100 shadow-xl shadow-leaf-900/10">
             <iframe
               title="Carte Google Maps : emplacement de la COOP-DCVA, quartier Gassi, N'Djaména"
-              src={`https://www.google.com/maps?q=${encodeURIComponent("Quartier Gassi, N'Djaména, Tchad")}&hl=fr&z=14&output=embed`}
+              src={`https://www.google.com/maps?q=${encodeURIComponent(lieu)}&hl=fr&z=14&output=embed`}
               className="h-[26rem] w-full border-0"
               loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
+              referrerPolicy="strict-origin-when-cross-origin"
               allowFullScreen
             />
           </div>
-          <p className="mt-4 text-sm">
+          <p className="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-sm">
             <a
-              href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent("Quartier Gassi, N'Djaména, Tchad")}`}
+              href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(lieu)}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="font-semibold text-leaf-700 hover:underline"
+              className="inline-flex min-h-11 items-center font-semibold text-leaf-700 hover:underline"
             >
               Ouvrir dans Google Maps →
             </a>
+            <a
+              href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(lieu)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-11 items-center font-semibold text-leaf-700 hover:underline"
+            >
+              Itinéraire →
+            </a>
+          </p>
+          <p className="text-xs text-ink-soft">
+            Emplacement approximatif (quartier Gassi) en attendant la position exacte du site.
           </p>
         </div>
       </Section>

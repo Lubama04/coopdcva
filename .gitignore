@@ -42,3 +42,8 @@ next-env.d.ts
 
 tsconfig.tsbuildinfo
 *.tar.gz
+
+# local originals and test output
+/assets-originaux/
+/test-results/
+/playwright-report/

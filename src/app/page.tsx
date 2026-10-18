@@ -1,7 +1,15 @@
 import Image from "next/image";
 import Link from "next/link";
-import { LogoFull } from "@/components/Logo";
-import { ButtonLink, FiliereCard, ProjetCard, Section, SectionTitle } from "@/components/ui";
+import {
+  ActivitesGrid,
+  ButtonLink,
+  FiliereCard,
+  ProjetCard,
+  Reseau,
+  Section,
+  SectionTitle,
+} from "@/components/ui";
+import { WhatsAppIcon } from "@/components/WhatsAppButton";
 import {
   chiffres,
   equipements,
@@ -9,9 +17,22 @@ import {
   filieres,
   projets,
   site,
-  soutiens,
   valeurs,
+  whatsappHref,
 } from "@/lib/site";
+
+/** Bande « En images » : un moulin, la tomate, la patate douce, une membre. */
+const enImages = [
+  "/images/galerie/depeliculer-1.jpg",
+  "/images/galerie/tomate-en-transformation.jpg",
+  "/images/galerie/transformation-patate-douce.jpg",
+  "/images/galerie/moulin-farine-1.jpg",
+].map((src) => galerie.find((p) => p.src === src)!);
+
+const heroPhotos = {
+  a: galerie.find((p) => p.src.endsWith("tomate-en-transformation.jpg"))!,
+  b: galerie.find((p) => p.src.endsWith("beignets-patate-douce.jpg"))!,
+};
 
 export default function Home() {
   const aLaUne = projets.find((p) => p.statut === "a-venir") ?? projets[0];
@@ -33,14 +54,15 @@ export default function Home() {
             <p className="rise text-xs font-semibold uppercase tracking-[0.22em] text-sesame-300">
               Coopérative agroalimentaire · N&apos;Djaména, Tchad
             </p>
-            <h1 className="rise rise-2 font-display mt-4 text-5xl font-semibold leading-[1.05] sm:text-6xl lg:text-7xl">
+            <h1 className="font-display mt-4 text-5xl font-semibold leading-[1.05] sm:text-6xl lg:text-7xl">
               Qui ne se plante pas
               <br />
               <span className="italic text-sesame-300">ne pousse jamais.</span>
             </h1>
             <p className="rise rise-3 mt-6 max-w-xl text-lg leading-relaxed text-leaf-100">
-              Nous transformons les céréales, les graines et la spiruline du Tchad, et nous
-              formons les femmes et les jeunes qui font vivre ces filières.
+              Production, transformation, formation et accompagnement : nous valorisons ce que
+              le Tchad produit, avec et pour les femmes, en particulier celles qui vivent avec
+              un handicap.
             </p>
             <div className="rise rise-3 mt-8 flex flex-wrap gap-3">
               <ButtonLink href="/filieres">Découvrir nos filières</ButtonLink>
@@ -50,17 +72,39 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="relative mx-auto aspect-square w-full max-w-sm">
+          <div className="relative mx-auto aspect-square w-full max-w-sm sm:max-w-md">
             <div className="absolute inset-0 rounded-full bg-leaf-600/60" />
             <div className="absolute inset-6 rounded-full bg-paper shadow-2xl shadow-leaf-900/40" />
             <Image
-              src="/images/embleme.png"
+              src="/images/embleme.svg"
               alt="Emblème de la COOP-DCVA : une pousse entre deux mains au-dessus d'une terre cultivée"
-              width={280}
-              height={425}
+              width={193}
+              height={322}
               priority
-              className="sway absolute left-1/2 top-1/2 h-[62%] w-auto -translate-x-1/2 -translate-y-1/2"
+              className="sway absolute left-1/2 top-1/2 h-[60%] w-auto -translate-x-1/2 -translate-y-1/2"
             />
+            <figure className="absolute -left-2 bottom-2 w-[34%] -rotate-6 overflow-hidden rounded-2xl border-4 border-paper shadow-xl shadow-leaf-900/40 sm:-left-6">
+              <Image
+                src={heroPhotos.a.src}
+                alt={heroPhotos.a.alt}
+                width={heroPhotos.a.width}
+                height={heroPhotos.a.height}
+                sizes="160px"
+                priority
+                className="aspect-[3/4] h-auto w-full object-cover"
+              />
+            </figure>
+            <figure className="absolute -right-2 top-4 w-[34%] rotate-6 overflow-hidden rounded-2xl border-4 border-paper shadow-xl shadow-leaf-900/40 sm:-right-6">
+              <Image
+                src={heroPhotos.b.src}
+                alt={heroPhotos.b.alt}
+                width={heroPhotos.b.width}
+                height={heroPhotos.b.height}
+                sizes="160px"
+                priority
+                className="aspect-square h-auto w-full object-cover"
+              />
+            </figure>
           </div>
         </div>
       </section>
@@ -97,14 +141,33 @@ export default function Home() {
               </ButtonLink>
             </div>
           </div>
-          <div className="mx-auto w-full max-w-lg rounded-[2rem] border border-soil-100 bg-white p-6 shadow-xl shadow-leaf-900/10">
-            <LogoFull />
-          </div>
+          <figure className="relative mx-auto w-full max-w-lg rounded-[2rem] bg-soil-700 p-8 text-white shadow-xl shadow-leaf-900/15 sm:p-10">
+            <span aria-hidden="true" className="font-display absolute -top-6 left-8 text-8xl leading-none text-sesame-300">
+              “
+            </span>
+            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-sesame-300">Nos objectifs</p>
+            <blockquote className="font-display mt-4 text-xl leading-relaxed sm:text-2xl">
+              La promotion des actions féminines, la protection et l&apos;autonomisation des
+              femmes marginalisées de manière générale et des femmes vivant avec des handicaps de
+              manière particulière.
+            </blockquote>
+            <figcaption className="mt-6 text-sm text-soil-100/90">Dépliant officiel de la coopérative</figcaption>
+          </figure>
         </div>
       </Section>
 
-      {/* FILIÈRES */}
+      {/* ACTIVITÉS (dépliant officiel) */}
       <Section className="bg-paper">
+        <SectionTitle
+          eyebrow="Nos activités"
+          title="De la production au marché, cinq domaines d'action"
+          intro="Les activités de la coopérative, telles que présentées dans son dépliant officiel."
+        />
+        <ActivitesGrid />
+      </Section>
+
+      {/* FILIÈRES */}
+      <Section>
         <SectionTitle
           eyebrow="Nos filières"
           title="Cinq filières actives, de la graine au produit fini"
@@ -146,7 +209,7 @@ export default function Home() {
       </Section>
 
       {/* EN IMAGES */}
-      <section className="px-5 pb-16 sm:pb-20">
+      <section className="px-5 py-16 sm:py-20">
         <div className="mx-auto max-w-6xl">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <SectionTitle eyebrow="En images" title="La coopérative au travail" />
@@ -155,9 +218,12 @@ export default function Home() {
             </ButtonLink>
           </div>
           <ul className="mt-8 grid grid-cols-2 gap-4 md:grid-cols-4">
-            {[1, 3, 5, 6].map((i) => galerie[i]).map((p) => (
+            {enImages.map((p) => (
               <li key={p.src}>
-                <Link href="/galerie" className="group relative block aspect-[3/4] overflow-hidden rounded-3xl">
+                <Link
+                  href="/galerie"
+                  className="group relative block aspect-[3/4] overflow-hidden rounded-3xl bg-leaf-900"
+                >
                   <Image
                     src={p.src}
                     alt={p.alt}
@@ -166,7 +232,7 @@ export default function Home() {
                     sizes="(min-width: 768px) 25vw, 50vw"
                     className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
-                  <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-leaf-900/85 to-transparent px-4 pb-3 pt-10 text-sm font-semibold text-white">
+                  <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-leaf-900/90 via-leaf-900/50 to-transparent px-4 pb-3 pt-12 text-sm font-semibold leading-snug text-white">
                     {p.title}
                   </span>
                 </Link>
@@ -215,17 +281,14 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SOUTIENS */}
+      {/* RÉSEAU : membres, partenaires, financement */}
       <Section>
-        <SectionTitle eyebrow="Ils nous soutiennent" title="Un financement déjà obtenu" align="center" />
-        <ul className="mx-auto mt-8 flex max-w-xl flex-wrap justify-center gap-4">
-          {soutiens.map((s) => (
-            <li key={s.name} className="min-w-52 rounded-2xl border border-soil-100 bg-paper px-6 py-5 text-center">
-              <p className="font-display text-2xl font-semibold text-leaf-700">{s.name}</p>
-              <p className="mt-1 text-sm text-ink-soft">{s.text}</p>
-            </li>
-          ))}
-        </ul>
+        <SectionTitle
+          eyebrow="Notre réseau"
+          title="Membres, partenaires et soutiens"
+          intro="Les organisations qui font partie de la coopérative ou qui travaillent à ses côtés."
+        />
+        <Reseau />
       </Section>
 
       {/* APPEL À L'ACTION */}
@@ -237,6 +300,10 @@ export default function Home() {
           <p className="mt-4 text-leaf-100">Parlons-en. Nous répondons depuis N&apos;Djaména.</p>
           <div className="mt-7 flex flex-wrap justify-center gap-3">
             <ButtonLink href="/contact">Nous écrire</ButtonLink>
+            <ButtonLink href={whatsappHref} variant="ghost" external>
+              <WhatsAppIcon className="h-5 w-5" />
+              WhatsApp
+            </ButtonLink>
             <ButtonLink href={site.phoneHref} variant="ghost" external>
               {site.phone}
             </ButtonLink>

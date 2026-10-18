@@ -2,19 +2,28 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { nav } from "@/lib/site";
 import { Logo } from "./Logo";
 
 export function Header() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const toggleRef = useRef<HTMLButtonElement>(null);
 
   const isActive = (href: string) =>
-    href === "/" ? pathname === "/" : pathname.startsWith(href);
+    href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-soil-100 bg-paper/90 backdrop-blur">
+    <header
+      className="sticky top-0 z-40 border-b border-soil-100 bg-paper/90 backdrop-blur print:static"
+      onKeyDown={(e) => {
+        if (e.key === "Escape" && open) {
+          setOpen(false);
+          toggleRef.current?.focus();
+        }
+      }}
+    >
       <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3">
         <Link href="/" aria-label="COOP-DCVA, retour à l'accueil" onClick={() => setOpen(false)}>
           <Logo />
@@ -41,6 +50,7 @@ export function Header() {
         </nav>
 
         <button
+          ref={toggleRef}
           type="button"
           className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-soil-100 text-leaf-700 lg:hidden"
           aria-expanded={open}

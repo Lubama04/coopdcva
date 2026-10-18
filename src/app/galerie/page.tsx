@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { GalerieExplorer } from "@/components/GalerieExplorer";
 import { ButtonLink, PageHero, Section, SectionTitle } from "@/components/ui";
 import { site, videoDeshydrateur as video } from "@/lib/site";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Galerie",
   description:
     "La vie de la COOP-DCVA en images et en vidéo : moulins, patate douce, tomate et membres au travail à Gassi.",
-};
+  path: "/galerie",
+});
 
 export default function GaleriePage() {
   return (
@@ -29,7 +31,10 @@ export default function GaleriePage() {
             playsInline
             preload="metadata"
             poster={video.poster}
-            className="mx-auto h-[32rem] w-auto max-w-full rounded-3xl bg-black shadow-xl shadow-leaf-900/15"
+            aria-label={`Vidéo : ${video.title}`}
+            width={288}
+            height={640}
+            className="mx-auto h-auto max-h-[75dvh] w-auto max-w-full rounded-3xl bg-black shadow-xl shadow-leaf-900/15 lg:h-[32rem]"
           >
             <source src={video.src} type="video/mp4" />
             Votre navigateur ne peut pas lire cette vidéo.

@@ -1,7 +1,7 @@
 /**
  * Contenu central du site COOP-DCVA.
  * Toutes les informations viennent de la coopérative (fiche de présentation,
- * bannière officielle) et de sa page Facebook publique.
+ * dépliant officiel, bannière officielle) et de sa page Facebook publique.
  * Pour ajouter un projet, il suffit d'ajouter une entrée dans `projets` :
  * la page de liste et la page de détail se mettent à jour toutes seules.
  */
@@ -22,9 +22,15 @@ export const site = {
     { display: "+235 63 33 16 89", href: "tel:+23563331689" },
     { display: "+235 98 28 36 70", href: "tel:+23598283670" },
   ],
+  /** E-mail imprimé sur le dépliant officiel (conflit avec `email` : à trancher, voir A-CONFIRMER.md). */
+  emailDepliant: "nangadoum999@gmail.com",
+  whatsapp: "https://wa.me/23565570937",
+  whatsappMessage: "Bonjour COOP-DCVA, je vous écris depuis votre site internet.",
   facebook: "https://www.facebook.com/profile.php?id=61573061867030",
   president: "Mme Mémadji Reoutou Ngaroroum",
 } as const;
+
+export const whatsappHref = `${site.whatsapp}?text=${encodeURIComponent(site.whatsappMessage)}`;
 
 export const nav = [
   { href: "/", label: "Accueil" },
@@ -35,14 +41,56 @@ export const nav = [
   { href: "/contact", label: "Contact" },
 ] as const;
 
-/** Les cinq axes d'intervention inscrits sur la bannière officielle. */
-export const piliers = [
-  "Production",
-  "Renforcement des capacités",
-  "Chaînes de valeur",
-  "Accompagnement",
-  "Agro-alimentaire",
-] as const;
+/**
+ * Les cinq activités, avec leurs intitulés exacts et leurs photos,
+ * telles qu'elles figurent sur le dépliant officiel (Documentation/DEPLIANT COOP.pdf).
+ * Les photos sont recadrées depuis le dépliant : aucune légende n'est ajoutée.
+ */
+export type Activite = {
+  id: string;
+  title: string;
+  photos: { src: string; width: number; height: number; alt: string }[];
+};
+
+export const activites: Activite[] = [
+  {
+    id: "production",
+    title: "Production des matières premières",
+    photos: [
+      { src: "/images/activites/production-1.jpg", width: 234, height: 268, alt: "Une femme debout au milieu d'un champ cultivé" },
+      { src: "/images/activites/production-2.jpg", width: 240, height: 268, alt: "Une femme en tenue verte et blanche dans un champ labouré, un bol à la main" },
+    ],
+  },
+  {
+    id: "chaines-de-valeur",
+    title: "Chaînes de valeur",
+    photos: [
+      { src: "/images/activites/chaines-de-valeur.jpg", width: 548, height: 344, alt: "Des sachets de farine conditionnés et étiquetés, empilés" },
+    ],
+  },
+  {
+    id: "renforcement",
+    title: "Renforcement des capacités",
+    photos: [
+      { src: "/images/activites/renforcement-1.jpg", width: 550, height: 344, alt: "Des femmes en blouse blanche et charlotte, masquées, assises autour d'une bassine" },
+      { src: "/images/activites/renforcement-2.jpg", width: 538, height: 344, alt: "Un groupe de femmes derrière une longue table de produits exposés" },
+    ],
+  },
+  {
+    id: "accompagnement",
+    title: "Accompagnement",
+    photos: [
+      { src: "/images/activites/accompagnement.jpg", width: 568, height: 358, alt: "Un groupe de femmes et d'hommes réunis autour d'une table dans une salle" },
+    ],
+  },
+  {
+    id: "agro-alimentaire",
+    title: "Agro-alimentaire",
+    photos: [
+      { src: "/images/activites/agro-alimentaire.jpg", width: 578, height: 358, alt: "Gros plan sur un produit séché en fines lamelles" },
+    ],
+  },
+];
 
 export type Filiere = {
   id: string;
@@ -142,6 +190,38 @@ export const equipe = [
 ];
 
 export const soutiens = [{ name: "USAID", text: "Financement obtenu" }];
+
+export type Organisation = { name: string; logo: string; width: number; height: number; note?: string };
+
+/** « Membres » et « Partenaires » : noms et logos lus sur le dépliant officiel. */
+export const membres: Organisation[] = [
+  { name: "MaPerle Natural Products", logo: "/images/partenaires/maperle.png", width: 307, height: 186 },
+  {
+    name: "CIFTA — Centre intégré de formation et de transformation agro-alimentaire",
+    logo: "/images/partenaires/cifta.png",
+    width: 185,
+    height: 180,
+  },
+  { name: "Soumsoumna", logo: "/images/partenaires/soumsoumna.png", width: 144, height: 190 },
+];
+
+export const partenaires: Organisation[] = [
+  {
+    name: "Job Booster",
+    note: "Emplois dignes pour les jeunes",
+    logo: "/images/partenaires/job-booster.png",
+    width: 322,
+    height: 174,
+  },
+  { name: "Bet Al-Nadjah", logo: "/images/partenaires/bet-al-nadjah.png", width: 166, height: 186 },
+  {
+    name: "Chambre de Commerce, d'Industrie, d'Agriculture, des Mines et d'Artisanat",
+    logo: "/images/partenaires/chambre-de-commerce.png",
+    width: 182,
+    height: 180,
+  },
+  { name: "Airtel", logo: "/images/partenaires/airtel.png", width: 179, height: 177 },
+];
 
 /* ------------------------------------------------------------------ */
 /* Projets                                                             */

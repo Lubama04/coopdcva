@@ -1,36 +1,39 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Site de la COOP-DCVA
 
-## Getting Started
+Site institutionnel de la Coopérative de Production et de Développement des Chaînes de Valeur Agroalimentaires (N'Djaména, Tchad). Maquette réalisée par ETS FLAUGUST BUSINESS, en attente de validation par la coopérative (le site est en `noindex`).
 
-First, run the development server:
+- Production : https://coop-dcva-site-flaugust-dev.vercel.app
+- Questions ouvertes : [A-CONFIRMER.md](A-CONFIRMER.md)
+
+## Technique
+
+Next.js 16 (App Router, pages statiques), React 19, TypeScript, Tailwind CSS v4. Aucune base de données, aucune clé secrète.
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev      # http://localhost:3000
+npm run lint
+npm run build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Où modifier quoi
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Je veux changer… | Fichier |
+|---|---|
+| Téléphones, e-mail, adresse, WhatsApp, Facebook | `src/lib/site.ts` (objet `site`) |
+| Filières, équipements, valeurs, chiffres, équipe | `src/lib/site.ts` |
+| Activités (dépliant), membres, partenaires | `src/lib/site.ts` (`activites`, `membres`, `partenaires`) |
+| Ajouter un projet | `src/lib/site.ts` (`projets`) : la liste et la page détail se créent seules |
+| Ajouter une photo | déposer le fichier dans `public/images/galerie/` (nom en minuscules, sans accents) puis ajouter une entrée dans `galerie` avec le **nom officiel** comme titre |
+| Logo | `public/images/logo.svg` et `embleme.svg` (vectoriels, tirés de `LOGO COOP.pdf`) |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Mise en ligne officielle
 
-## Learn More
+1. Retirer `robots: { index: false, … }` dans `src/app/layout.tsx` et passer `disallow` à `allow` dans `src/app/robots.ts`.
+2. Définir `NEXT_PUBLIC_SITE_URL` (ex. `https://coopdcva.td`) dans Vercel.
+3. Ajouter le domaine au projet Vercel et saisir les DNS chez le registraire.
 
-To learn more about Next.js, take a look at the following resources:
+## Héberger ailleurs que Vercel
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Serveur Node** (VPS, Coolify) : `npm ci && npm run build && npm start` (port 3000), derrière un proxy HTTPS.
+- Les en-têtes de sécurité sont définis dans `next.config.ts` et s'appliquent quel que soit l'hébergeur Node.

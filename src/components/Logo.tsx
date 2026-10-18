@@ -1,16 +1,16 @@
 import Image from "next/image";
 
-/** Emblème officiel (pousse dans les mains) + nom de la coopérative, pour l'en-tête. */
+/** Emblème officiel (pousse dans les mains, vectoriel) + nom de la coopérative, pour l'en-tête. */
 export function Logo({ light = false }: { light?: boolean }) {
   return (
     <span className="flex items-center gap-3">
       <Image
-        src="/images/embleme.png"
+        src="/images/embleme.svg"
         alt=""
-        width={280}
-        height={425}
+        width={193}
+        height={322}
         priority
-        className="h-12 w-auto shrink-0 rounded-md bg-white"
+        className="h-12 w-auto shrink-0"
       />
       <span className="leading-none">
         <span
@@ -32,7 +32,7 @@ export function Logo({ light = false }: { light?: boolean }) {
   );
 }
 
-/** Logo complet officiel, net et grand, sur fond blanc. */
+/** Logo complet officiel (vectoriel, net sur tous les écrans). */
 export function LogoFull({
   className = "",
   priority = false,
@@ -42,10 +42,10 @@ export function LogoFull({
 }) {
   return (
     <Image
-      src="/images/logo.png"
+      src="/images/logo.svg"
       alt="Logo officiel de la COOP-DCVA : une pousse entre deux mains au-dessus d'une terre cultivée"
-      width={1080}
-      height={658}
+      width={780}
+      height={450}
       priority={priority}
       className={`h-auto w-full ${className}`}
     />

@@ -1,6 +1,16 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { statutLabel, type Filiere, type Projet } from "@/lib/site";
+import {
+  activites,
+  membres,
+  partenaires,
+  soutiens,
+  statutLabel,
+  type Filiere,
+  type Organisation,
+  type Projet,
+} from "@/lib/site";
 
 export function SectionTitle({
   eyebrow,
@@ -71,7 +81,7 @@ export function PageHero({
         <p className="rise text-xs font-semibold uppercase tracking-[0.22em] text-sesame-300">
           {eyebrow}
         </p>
-        <h1 className="rise rise-2 font-display mt-3 max-w-3xl text-4xl font-semibold leading-tight sm:text-5xl">
+        <h1 className="font-display mt-3 max-w-3xl text-4xl font-semibold leading-tight sm:text-5xl">
           {title}
         </h1>
         <p className="rise rise-3 mt-5 max-w-2xl text-lg leading-relaxed text-leaf-100">{intro}</p>
@@ -88,17 +98,23 @@ export function ButtonLink({
 }: {
   href: string;
   children: ReactNode;
-  variant?: "primary" | "secondary" | "ghost";
+  variant?: "primary" | "secondary" | "ghost" | "outline";
   external?: boolean;
 }) {
   const styles = {
     primary: "bg-sesame-500 text-ink hover:bg-sesame-300",
     secondary: "bg-leaf-700 text-white hover:bg-leaf-600",
+    outline: "border-2 border-leaf-700 text-leaf-700 hover:bg-leaf-50",
     ghost: "border border-white/60 text-white hover:bg-white/10",
   }[variant];
-  const cls = `inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-semibold transition-colors ${styles}`;
+  const cls = `inline-flex min-h-11 items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors ${styles}`;
+  const newTab = /^https?:/.test(href);
   return external ? (
-    <a href={href} className={cls} target="_blank" rel="noopener noreferrer">
+    <a
+      href={href}
+      className={cls}
+      {...(newTab ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+    >
       {children}
     </a>
   ) : (
@@ -186,36 +202,6 @@ export function FiliereCard({ f, detailed = false }: { f: Filiere; detailed?: bo
   );
 }
 
-/** Emplacement de photo : à remplacer par les vraies photos de la coopérative. */
-export function PhotoSlot({
-  label,
-  hint,
-  tone = "green",
-  className = "",
-}: {
-  label: string;
-  hint: string;
-  tone?: Filiere["tone"];
-  className?: string;
-}) {
-  const t = toneStyles[tone];
-  return (
-    <figure
-      className={`relative flex min-h-48 flex-col items-center justify-center overflow-hidden rounded-3xl border-2 border-dashed border-soil-500/30 ${t.bg} p-6 text-center ${className}`}
-    >
-      <svg viewBox="0 0 48 48" className={`h-10 w-10 ${t.fg}`} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-        <rect x="6" y="11" width="36" height="28" rx="5" />
-        <circle cx="18" cy="23" r="4" />
-        <path d="M6 35l11-9 8 7 7-5 10 8" />
-      </svg>
-      <figcaption className="mt-3">
-        <span className={`block text-sm font-semibold ${t.fg}`}>{label}</span>
-        <span className="mt-1 block text-xs text-ink-soft">Photo à insérer : {hint}</span>
-      </figcaption>
-    </figure>
-  );
-}
-
 export function StatusBadge({ statut }: { statut: Projet["statut"] }) {
   const upcoming = statut === "a-venir";
   return (
@@ -256,5 +242,96 @@ export function ProjetCard({ p }: { p: Projet }) {
         </svg>
       </span>
     </article>
+  );
+}
+
+/** Les cinq activités du dépliant officiel, en mosaïque de photos. */
+export function ActivitesGrid() {
+  return (
+    <ul className="mt-10 grid auto-rows-[minmax(11rem,auto)] gap-4 sm:grid-cols-2 lg:grid-cols-6">
+      {activites.map((a, i) => {
+        const span = ["lg:col-span-3 lg:row-span-2", "lg:col-span-3", "lg:col-span-3", "lg:col-span-3", "lg:col-span-3"][i];
+        return (
+          <li
+            key={a.id}
+            className={`group relative overflow-hidden rounded-3xl bg-leaf-900 ${span ?? "lg:col-span-2"}`}
+          >
+            <div className={`grid h-full ${a.photos.length > 1 ? "grid-cols-2 gap-px" : ""}`}>
+              {a.photos.map((ph) => (
+                <Image
+                  key={ph.src}
+                  src={ph.src}
+                  alt={ph.alt}
+                  width={ph.width}
+                  height={ph.height}
+                  sizes="(min-width: 1024px) 50vw, (min-width: 640px) 50vw, 100vw"
+                  className="h-full min-h-44 w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+              ))}
+            </div>
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-leaf-900/95 via-leaf-900/60 to-transparent px-5 pb-4 pt-16">
+              <span className="font-display text-sm font-semibold text-sesame-300">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <h3 className="font-display text-xl font-semibold leading-snug text-white sm:text-2xl">
+                {a.title}
+              </h3>
+            </div>
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
+
+function LogoTile({ o }: { o: Organisation }) {
+  return (
+    <li className="flex flex-col items-center gap-3 rounded-2xl border border-soil-100 bg-white p-4 text-center">
+      <span className="flex h-20 w-full items-center justify-center">
+        <Image
+          src={o.logo}
+          alt={`Logo : ${o.name}`}
+          width={o.width}
+          height={o.height}
+          sizes="160px"
+          className="logo-muted max-h-20 w-auto object-contain"
+        />
+      </span>
+      <span className="text-xs font-semibold leading-snug text-ink">{o.name}</span>
+      {o.note && <span className="-mt-2 text-xs text-ink-soft">{o.note}</span>}
+    </li>
+  );
+}
+
+/** Membres, partenaires et financements, tels qu'imprimés sur le dépliant officiel. */
+export function Reseau() {
+  return (
+    <div className="mt-10 grid gap-10 lg:grid-cols-[1fr_1.35fr]">
+      <div>
+        <h3 className="text-xs font-semibold uppercase tracking-[0.22em] text-sesame-700">Membres</h3>
+        <ul className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3">
+          {membres.map((o) => (
+            <LogoTile key={o.name} o={o} />
+          ))}
+        </ul>
+      </div>
+      <div>
+        <h3 className="text-xs font-semibold uppercase tracking-[0.22em] text-sesame-700">Partenaires</h3>
+        <ul className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
+          {partenaires.map((o) => (
+            <LogoTile key={o.name} o={o} />
+          ))}
+        </ul>
+        <p className="mt-4 text-sm text-ink-soft">
+          Financement obtenu :{" "}
+          {soutiens.map((s) => (
+            <strong key={s.name} className="font-semibold text-leaf-700">
+              {s.name}
+            </strong>
+          ))}
+          .
+        </p>
+      </div>
+    </div>
   );
 }

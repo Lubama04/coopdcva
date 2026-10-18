@@ -1,13 +1,15 @@
 import Link from "next/link";
-import { nav, site } from "@/lib/site";
+import { nav, site, whatsappHref } from "@/lib/site";
 import { LogoFull } from "./Logo";
 
 export function Footer() {
   return (
-    <footer className="grain bg-leaf-900 text-leaf-100">
+    <footer className="grain bg-leaf-900 pb-16 text-leaf-100 sm:pb-0">
       <div className="mx-auto grid max-w-6xl gap-10 px-5 py-14 md:grid-cols-3">
         <div>
-          <div className="max-w-[15rem] rounded-2xl bg-white p-3"><LogoFull /></div>
+          <div className="max-w-[15rem] rounded-2xl bg-white p-3">
+            <LogoFull />
+          </div>
           <p className="mt-5 max-w-xs text-sm leading-relaxed text-leaf-100/80">
             {site.fullName}. Créée le {site.founded} à N&apos;Djaména.
           </p>
@@ -20,10 +22,10 @@ export function Footer() {
           <h2 className="text-sm font-semibold uppercase tracking-widest text-sesame-300">
             Le site
           </h2>
-          <ul className="mt-4 space-y-2 text-sm">
+          <ul className="mt-3 text-sm">
             {nav.map((item) => (
               <li key={item.href}>
-                <Link href={item.href} className="hover:text-white hover:underline">
+                <Link href={item.href} className="inline-block py-1.5 hover:text-white hover:underline">
                   {item.label}
                 </Link>
               </li>
@@ -35,18 +37,28 @@ export function Footer() {
           <h2 className="text-sm font-semibold uppercase tracking-widest text-sesame-300">
             Nous joindre
           </h2>
-          <address className="mt-4 space-y-2 text-sm not-italic">
-            <p>{site.addressDetail}</p>
+          <address className="mt-3 text-sm not-italic">
+            <p className="py-1.5">{site.addressDetail}</p>
             {site.phones.map((ph) => (
               <p key={ph.href}>
-                <a href={ph.href} className="hover:text-white hover:underline">
+                <a href={ph.href} className="inline-block py-1.5 hover:text-white hover:underline">
                   {ph.display}
                 </a>
               </p>
             ))}
             <p>
-              <a href={`mailto:${site.email}`} className="hover:text-white hover:underline">
+              <a href={`mailto:${site.email}`} className="inline-block py-1.5 hover:text-white hover:underline">
                 {site.email}
+              </a>
+            </p>
+            <p>
+              <a
+                href={whatsappHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block py-1.5 hover:text-white hover:underline"
+              >
+                WhatsApp
               </a>
             </p>
             <p>
@@ -54,7 +66,7 @@ export function Footer() {
                 href={site.facebook}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-white hover:underline"
+                className="inline-block py-1.5 hover:text-white hover:underline"
               >
                 Page Facebook
               </a>

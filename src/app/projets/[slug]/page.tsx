@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { pageMetadata } from "@/lib/seo";
 import { ButtonLink, Section, SectionTitle, StatusBadge } from "@/components/ui";
 import { getProjet, projets, site } from "@/lib/site";
 
@@ -14,7 +15,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const projet = getProjet(slug);
   if (!projet) return { title: "Projet introuvable" };
-  return { title: projet.title, description: projet.summary };
+  return pageMetadata({ title: projet.title, description: projet.summary, path: `/projets/${projet.slug}` });
 }
 
 export default async function ProjetPage({ params }: Props) {

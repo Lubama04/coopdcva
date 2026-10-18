@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import {
   ButtonLink,
   FiliereCard,
@@ -8,11 +9,12 @@ import {
 } from "@/components/ui";
 import { filieres, site } from "@/lib/site";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Nos filières",
   description:
     "Céréales, oléagineux, arachide, spiruline du lac Tchad et formation : les cinq filières actives de la COOP-DCVA.",
-};
+  path: "/filieres",
+});
 
 export default function FilieresPage() {
   return (

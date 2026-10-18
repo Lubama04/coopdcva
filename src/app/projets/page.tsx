@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { ProjetsExplorer } from "@/components/ProjetsExplorer";
 import { ButtonLink, PageHero, Section, SectionTitle } from "@/components/ui";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Nos projets",
   description:
     "Les projets de la COOP-DCVA : site de production de Gassi, formation des membres, certification sanitaire et PROVAL-ZD, projet à venir en recherche de partenaires.",
-};
+  path: "/projets",
+});
 
 export default function ProjetsPage() {
   return (

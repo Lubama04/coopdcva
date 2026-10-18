@@ -37,9 +37,14 @@ Pièges connus : `new Date()` interdit au prérendu (cacheComponents) ; `params`
 
 ## Carte du code
 - `src/lib/site.ts` — **tout le contenu** (coordonnées, nav, filières, équipements, valeurs, chiffres, équipe, soutiens, projets, galerie, vidéo). Ajouter une entrée dans `projets` ou `galerie` met à jour listes et pages de détail automatiquement.
-- `src/app/` — pages : `/` (accueil), `/a-propos`, `/filieres`, `/projets`, `/projets/[slug]`, `/galerie`, `/contact` ; `layout.tsx` (métadonnées, JSON-LD, noindex), `icon.png`.
-- `src/components/` — `Header`, `Footer`, `Logo` (emblème + texte, et `LogoFull`), `ui.tsx` (SectionTitle, Section, PageHero, ButtonLink, FiliereCard, StatusBadge, ProjetCard), `ProjetsExplorer` (filtre), `GalerieExplorer` (mosaïque, filtres, visionneuse), `ContactForm` (mailto pour l'instant).
-- `public/images/` — `logo.png`, `embleme.png`, `banniere.png` (bannière officielle, utilisée en image de partage), `galerie/*.jpg` ; `public/videos/deshydrateur-alimentaire.mp4`.
+- `src/app/` — pages : `/` (accueil), `/a-propos`, `/filieres`, `/projets`, `/projets/[slug]`, `/galerie`, `/contact` ; `layout.tsx` (métadonnées, JSON-LD, noindex), `sitemap.ts`, `robots.ts`, `manifest.ts`, `icon.png`, `apple-icon.png`, `opengraph-image.png` (générés depuis `LOGO COOP.pdf`).
+- `src/lib/seo.ts` — `baseUrl` et `pageMetadata()` (canonique + Open Graph par page). En-têtes de sécurité (CSP…) dans `next.config.ts`.
+- `src/components/` — `Header`, `Footer`, `Logo` (emblème SVG + texte, et `LogoFull`), `ui.tsx` (SectionTitle, Section, PageHero, ButtonLink, FiliereCard, StatusBadge, ProjetCard, ActivitesGrid, Reseau), `ProjetsExplorer` (filtre), `GalerieExplorer` (mosaïque, filtres, visionneuse clavier/tactile), `ContactForm` (WhatsApp ou mailto, sans serveur), `WhatsAppButton` (bouton flottant).
+- `public/images/` — `logo.svg`/`embleme.svg` (vectoriels, tirés du PDF officiel) + PNG haute définition, `banniere.png`, `galerie/*.jpg`, `activites/*.jpg` (photos recadrées du dépliant, titrées par les intitulés du dépliant), `partenaires/*.png` (logos recadrés du dépliant) ; `public/videos/deshydrateur-alimentaire.mp4`.
+- `A-CONFIRMER.md` — toutes les questions ouvertes pour la présidente.
+
+## Dépliant officiel (lu le 18/10/2026)
+Activités : Production des matières premières · Chaînes de valeur · Renforcement des capacités · Accompagnement · Agro-alimentaire. Membres : MaPerle Natural Products, CIFTA, Soumsoumna. Partenaires : Job Booster (« emplois dignes pour les jeunes »), Bet Al-Nadjah, Chambre de Commerce, d'Industrie, d'Agriculture, des Mines et d'Artisanat, Airtel.
 
 ## Correspondance photos (nom officiel → fichier du site)
 | Nom officiel | Fichier dans `public/images/galerie/` |

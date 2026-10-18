@@ -18,7 +18,7 @@
 
   --color-sesame-300: #f0c566;
   --color-sesame-500: #e0a526;
-  --color-sesame-700: #9a6a07;
+  --color-sesame-700: #7d5506;
 
   --color-cream: #faf5ea;
   --color-paper: #fffdf8;
@@ -107,4 +107,30 @@ h3,
   html {
     scroll-behavior: auto;
   }
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Logo strip: muted until hovered, full colour for touch screens. */
+@media (hover: hover) {
+  .logo-muted {
+    filter: grayscale(1);
+    opacity: 0.75;
+    transition: filter 0.3s, opacity 0.3s;
+  }
+  .logo-muted:hover {
+    filter: none;
+    opacity: 1;
+  }
+}
+
+/* Keep long French words from overflowing narrow screens. */
+h1,
+h2,
+h3 {
+  overflow-wrap: break-word;
+  hyphens: auto;
 }

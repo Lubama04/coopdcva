@@ -2,13 +2,12 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { site } from "@/lib/site";
+import { baseUrl, ogBase } from "@/lib/seo";
 
-const baseUrl =
-  process.env.NEXT_PUBLIC_SITE_URL ??
-  (process.env.VERCEL_PROJECT_PRODUCTION_URL
-    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-    : "http://localhost:3000");
+const description =
+  "COOP-DCVA, coopérative de production et de développement des chaînes de valeur agroalimentaires à N'Djaména : production, transformation, formation et accompagnement, au service des femmes et des jeunes.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
@@ -16,39 +15,50 @@ export const metadata: Metadata = {
     default: "COOP-DCVA | Chaînes de valeur agroalimentaires, N'Djaména",
     template: "%s | COOP-DCVA",
   },
-  description:
-    "COOP-DCVA, coopérative de production et de développement des chaînes de valeur agroalimentaires à N'Djaména : céréales, huiles, arachide, spiruline et formation, au service des femmes et des jeunes.",
+  description,
+  applicationName: "COOP-DCVA",
+  authors: [{ name: "COOP-DCVA" }],
+  alternates: { canonical: "/" },
+  formatDetection: { telephone: true, email: true, address: false },
   openGraph: {
-    type: "website",
-    locale: "fr_FR",
-    siteName: "COOP-DCVA",
+    ...ogBase,
     title: "COOP-DCVA | Qui ne se plante pas ne pousse jamais",
-    images: [{ url: "/images/banniere.png", width: 1080, height: 648, alt: "COOP-DCVA" }],
-    description:
-      "Transformation locale, autonomisation des femmes et des jeunes, économie circulaire zéro déchet au Tchad.",
+    description,
+    url: "/",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "COOP-DCVA | Qui ne se plante pas ne pousse jamais",
+    description,
   },
   robots: { index: false, follow: false }, // Maquette : à passer en index au lancement officiel.
 };
 
 export const viewport: Viewport = {
   themeColor: "#115c2f",
+  colorScheme: "light",
 };
 
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
+  "@id": `${baseUrl}/#organisation`,
   name: site.name,
   legalName: site.fullName,
+  url: baseUrl,
+  logo: `${baseUrl}/images/logo.png`,
+  image: `${baseUrl}/opengraph-image.png`,
   foundingDate: "2023-07-10",
-  email: site.email,
-  telephone: site.phone,
   slogan: site.slogan,
+  email: site.email,
+  telephone: site.phones.map((p) => p.href.replace("tel:", "")),
   address: {
     "@type": "PostalAddress",
-    streetAddress: "Quartier Gassi",
+    streetAddress: "Rue du Lycée de Gassi, Quartier Gassi",
     addressLocality: "N'Djaména",
     addressCountry: "TD",
   },
+  areaServed: { "@type": "Country", name: "Tchad" },
   sameAs: [site.facebook],
 };
 
@@ -63,13 +73,15 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           Aller au contenu
         </a>
         <Header />
-        <main id="contenu" className="flex-1">
+        <main id="contenu" tabIndex={-1} className="flex-1 focus:outline-none">
           {children}
         </main>
         <Footer />
+        <WhatsAppButton />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          // Escape "<" so the JSON can never close the script tag.
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\u003c") }}
         />
       </body>
     </html>

@@ -1,19 +1,22 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import Image from "next/image";
 import { LogoFull } from "@/components/Logo";
 import {
   ButtonLink,
   PageHero,
+  Reseau,
   Section,
   SectionTitle,
 } from "@/components/ui";
-import { equipe, equipements, site, soutiens, valeurs } from "@/lib/site";
+import { activites, equipe, equipements, site, valeurs } from "@/lib/site";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "À propos",
   description:
     "Histoire, mission, équipe et valeurs de la COOP-DCVA, coopérative agroalimentaire de N'Djaména créée en juillet 2023.",
-};
+  path: "/a-propos",
+});
 
 export default function AProposPage() {
   return (
@@ -113,15 +116,17 @@ export default function AProposPage() {
             </ul>
           </div>
           <div>
-            <SectionTitle eyebrow="Reconnaissance" title="Financements et soutiens" />
-            <ul className="mt-6 space-y-3">
-              {soutiens.map((s) => (
-                <li key={s.name} className="rounded-2xl bg-paper p-5">
-                  <p className="font-display text-xl font-semibold text-leaf-700">{s.name}</p>
-                  <p className="text-sm text-ink-soft">{s.text}</p>
+            <SectionTitle eyebrow="Ce que nous faisons" title="Nos cinq activités" />
+            <ol className="mt-6 space-y-3">
+              {activites.map((a, i) => (
+                <li key={a.id} className="flex items-baseline gap-4 border-b border-soil-100 pb-3">
+                  <span className="font-display text-lg font-semibold text-sesame-700">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span className="font-medium text-ink">{a.title}</span>
                 </li>
               ))}
-            </ul>
+            </ol>
             <p className="mt-5 rounded-2xl border border-sesame-500/40 bg-sesame-300/20 p-4 text-sm text-ink">
               Certification et normes sanitaires : démarche en cours d&apos;obtention.
             </p>
@@ -130,6 +135,15 @@ export default function AProposPage() {
       </Section>
 
       <Section>
+        <SectionTitle
+          eyebrow="Notre réseau"
+          title="Membres, partenaires et soutiens"
+          intro="Tels qu'ils figurent sur le dépliant officiel de la coopérative."
+        />
+        <Reseau />
+      </Section>
+
+      <Section className="bg-paper">
         <SectionTitle eyebrow="Nous rejoindre" title="Membre, partenaire ou client : il y a une place pour vous" align="center" />
         <ul className="mt-10 grid gap-5 md:grid-cols-3">
           {[
@@ -137,7 +151,7 @@ export default function AProposPage() {
             { t: "Devenir partenaire", x: "Financement, expertise ou débouchés : découvrez nos projets et leurs besoins." },
             { t: "Acheter nos produits", x: "Farines, huiles, beurre de karité, spiruline : demandez disponibilités et quantités." },
           ].map((c) => (
-            <li key={c.t} className="rounded-3xl border border-soil-100 bg-paper p-7">
+            <li key={c.t} className="rounded-3xl border border-soil-100 bg-cream p-7">
               <h3 className="font-display text-xl font-semibold text-leaf-900">{c.t}</h3>
               <p className="mt-2 text-sm leading-relaxed text-ink-soft">{c.x}</p>
             </li>
