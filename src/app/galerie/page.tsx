@@ -1,20 +1,13 @@
 import type { Metadata } from "next";
-import { ButtonLink, PageHero, PhotoSlot, Section } from "@/components/ui";
-import { site } from "@/lib/site";
+import { GalerieExplorer } from "@/components/GalerieExplorer";
+import { ButtonLink, PageHero, Section, SectionTitle } from "@/components/ui";
+import { site, videoDeshydrateur as video } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Galerie",
-  description: "La vie de la COOP-DCVA en images : production, produits, formations et membres.",
+  description:
+    "La vie de la COOP-DCVA en images et en vidéo : moulin, broyeur, séchage des produits et membres au travail à Gassi.",
 };
-
-const slots = [
-  { label: "Le moulin à farine", hint: "mouture du maïs ou du sorgho", tone: "gold", span: "sm:col-span-2" },
-  { label: "La presse à huile", hint: "pressage du sésame", tone: "brown", span: "" },
-  { label: "Les produits", hint: "huiles et farines conditionnées", tone: "clay", span: "" },
-  { label: "La spiruline (dihé)", hint: "séchage ou conditionnement", tone: "teal", span: "" },
-  { label: "Séance de formation", hint: "la formatrice avec les membres", tone: "green", span: "sm:col-span-2" },
-  { label: "Le site de Gassi", hint: "vue du site de production", tone: "brown", span: "" },
-] as const;
 
 export default function GaleriePage() {
   return (
@@ -22,15 +15,33 @@ export default function GaleriePage() {
       <PageHero
         eyebrow="Galerie"
         title="La coopérative en images"
-        intro="Production, produits et formations : les photos et vidéos de la coopérative prendront place ici."
+        intro="Le moulin, le broyeur, le séchage, les produits et celles qui les font : un aperçu du travail mené chaque jour à Gassi."
       />
+
       <Section>
-        <div className="grid gap-5 sm:grid-cols-3">
-          {slots.map((s) => (
-            <PhotoSlot key={s.label} label={s.label} hint={s.hint} tone={s.tone} className={`min-h-64 ${s.span}`} />
-          ))}
+        <GalerieExplorer />
+      </Section>
+
+      <Section className="bg-paper">
+        <div className="grid items-center gap-10 lg:grid-cols-[0.6fr_1fr]">
+          <video
+            controls
+            playsInline
+            preload="metadata"
+            poster={video.poster}
+            className="mx-auto h-[32rem] w-auto max-w-full rounded-3xl bg-black shadow-xl shadow-leaf-900/15"
+          >
+            <source src={video.src} type="video/mp4" />
+            Votre navigateur ne peut pas lire cette vidéo.
+          </video>
+          <div>
+            <SectionTitle eyebrow="En vidéo" title={video.title} intro={video.caption} />
+          </div>
         </div>
-        <div className="mt-12 rounded-3xl border border-soil-100 bg-paper p-8 text-center">
+      </Section>
+
+      <Section>
+        <div className="rounded-3xl border border-soil-100 bg-paper p-8 text-center">
           <h2 className="font-display text-2xl font-semibold text-leaf-900">Suivez-nous sur Facebook</h2>
           <p className="mx-auto mt-2 max-w-md text-sm text-ink-soft">
             Les actualités de la coopérative sont publiées sur notre page.

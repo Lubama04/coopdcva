@@ -1,9 +1,11 @@
 import Image from "next/image";
+import Link from "next/link";
 import { LogoFull } from "@/components/Logo";
 import { ButtonLink, FiliereCard, ProjetCard, Section, SectionTitle } from "@/components/ui";
 import {
   chiffres,
   equipements,
+  galerie,
   filieres,
   projets,
   site,
@@ -142,6 +144,37 @@ export default function Home() {
           ))}
         </ul>
       </Section>
+
+      {/* EN IMAGES */}
+      <section className="px-5 pb-16 sm:pb-20">
+        <div className="mx-auto max-w-6xl">
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <SectionTitle eyebrow="En images" title="La coopérative au travail" />
+            <ButtonLink href="/galerie" variant="secondary">
+              Voir la galerie
+            </ButtonLink>
+          </div>
+          <ul className="mt-8 grid grid-cols-2 gap-4 md:grid-cols-4">
+            {[1, 3, 5, 6].map((i) => galerie[i]).map((p) => (
+              <li key={p.src}>
+                <Link href="/galerie" className="group relative block aspect-[3/4] overflow-hidden rounded-3xl">
+                  <Image
+                    src={p.src}
+                    alt={p.alt}
+                    width={p.width}
+                    height={p.height}
+                    sizes="(min-width: 768px) 25vw, 50vw"
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-leaf-900/85 to-transparent px-4 pb-3 pt-10 text-sm font-semibold text-white">
+                    {p.title}
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
 
       {/* VALEURS */}
       <Section className="bg-paper">

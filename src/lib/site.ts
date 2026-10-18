@@ -105,7 +105,7 @@ export const equipements = [
   { title: "Moulin à farine", note: "Opérationnel" },
   { title: "Presse à huile motorisée", note: "Pour sésame, balanites, karité" },
   { title: "Moulin à légumes", note: "Transformation des légumes" },
-  { title: "Matériel de séchage", note: "Conservation des produits" },
+  { title: "Déshydrateur alimentaire", note: "Séchage et conservation" },
   { title: "Site de production sécurisé", note: "Quartier Gassi, N'Djaména" },
 ];
 
@@ -283,3 +283,96 @@ export const projets: Projet[] = [
 export function getProjet(slug: string): Projet | undefined {
   return projets.find((p) => p.slug === slug);
 }
+
+/* ------------------------------------------------------------------ */
+/* Galerie                                                             */
+/* ------------------------------------------------------------------ */
+
+export type Categorie = "Production" | "Séchage" | "Produits" | "Équipe";
+
+export const galerieCategories: Categorie[] = ["Production", "Séchage", "Produits", "Équipe"];
+
+export type Photo = {
+  src: string;
+  width: number;
+  height: number;
+  title: string;
+  caption: string;
+  alt: string;
+  categorie: Categorie;
+};
+
+/** Pour ajouter une photo : la déposer dans public/images/galerie puis ajouter une ligne ici. */
+export const galerie: Photo[] = [
+  {
+    src: "/images/galerie/equipe-moulin.jpg",
+    width: 521,
+    height: 1156,
+    title: "Autour du moulin",
+    caption: "Des membres et l'équipe réunis autour du moulin, au quartier Gassi.",
+    alt: "Trois personnes autour d'un moulin à grain rouge, les mains dans le grain",
+    categorie: "Production",
+  },
+  {
+    src: "/images/galerie/sechage-tomates.jpg",
+    width: 486,
+    height: 1080,
+    title: "Tomates à sécher",
+    caption: "Des tranches de tomate étalées sur une claie, avant le séchage.",
+    alt: "Trois femmes en tenue bleue et blanche devant une grande claie couverte de tranches de tomate",
+    categorie: "Séchage",
+  },
+  {
+    src: "/images/galerie/broyeur-cyclone.jpg",
+    width: 521,
+    height: 1156,
+    title: "Broyeur et cyclone",
+    caption: "Un broyeur à moteur relié à un cyclone qui recueille la poudre.",
+    alt: "Un homme penché sur un broyeur vert relié à un grand cyclone en métal",
+    categorie: "Production",
+  },
+  {
+    src: "/images/galerie/friandises-torsadees.jpg",
+    width: 1042,
+    height: 1026,
+    title: "Friandises torsadées",
+    caption: "Des friandises torsadées, prêtes à être conditionnées.",
+    alt: "Un grand plat rempli de friandises torsadées dorées",
+    categorie: "Produits",
+  },
+  {
+    src: "/images/galerie/broyeur-farine.jpg",
+    width: 521,
+    height: 1156,
+    title: "La farine à la sortie",
+    caption: "La farine tombe dans un bac à la sortie du broyeur.",
+    alt: "Une femme debout à côté d'un broyeur vert dont un tuyau déverse de la farine dans un bac",
+    categorie: "Équipe",
+  },
+  {
+    src: "/images/galerie/produit-seche.jpg",
+    width: 1038,
+    height: 1133,
+    title: "Séchage sur claie",
+    caption: "Un produit en fines lamelles, séché sur une claie avant conditionnement.",
+    alt: "Un tas de lamelles claires séchant sur une claie à maille verte",
+    categorie: "Séchage",
+  },
+  {
+    src: "/images/galerie/membre-moulin.jpg",
+    width: 398,
+    height: 551,
+    title: "Au moulin",
+    caption: "Une membre de la coopérative devant le moulin.",
+    alt: "Une femme en tenue imprimée rose posant à côté d'un moulin rouge",
+    categorie: "Équipe",
+  },
+];
+
+export const videoDeshydrateur = {
+  src: "/videos/deshydrateur-alimentaire.mp4",
+  poster: "/images/galerie/deshydrateur-poster.jpg",
+  title: "Le déshydrateur alimentaire en action",
+  caption:
+    "Des membres chargent les claies dans le déshydrateur pour sécher et conserver les produits.",
+};

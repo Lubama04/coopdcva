@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { LogoFull } from "@/components/Logo";
 import {
   ButtonLink,
   PageHero,
-  PhotoSlot,
   Section,
   SectionTitle,
 } from "@/components/ui";
@@ -88,11 +88,13 @@ export default function AProposPage() {
               ))}
             </ul>
           </div>
-          <PhotoSlot
-            label="L'équipe au travail"
-            hint="gérant, meunier et formatrice sur le site de production"
-            tone="brown"
-            className="min-h-96"
+          <Image
+            src="/images/galerie/equipe-moulin.jpg"
+            alt="Des membres et l'équipe autour du moulin, au quartier Gassi"
+            width={521}
+            height={1156}
+            sizes="(min-width: 1024px) 40vw, 100vw"
+            className="h-96 w-full rounded-3xl object-cover object-top lg:h-full lg:max-h-[34rem]"
           />
         </div>
       </Section>
