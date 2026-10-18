@@ -1,6 +1,4 @@
 @import "tailwindcss";
-@import "@fontsource-variable/fraunces";
-@import "@fontsource-variable/inter";
 
 /* Palette tirée du logo et de la bannière de la COOP-DCVA : vert, brun, sésame. */
 @theme {
@@ -25,8 +23,8 @@
   --color-ink: #1d2a20;
   --color-ink-soft: #4a5a4d;
 
-  --font-display: "Fraunces Variable", Georgia, "Times New Roman", serif;
-  --font-sans: "Inter Variable", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: var(--font-fraunces), Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-inter), system-ui, -apple-system, "Segoe UI", sans-serif;
 }
 
 html {
@@ -133,4 +131,10 @@ h2,
 h3 {
   overflow-wrap: break-word;
   hyphens: auto;
+}
+
+/* Skip rendering work for off-screen sections until they get close to the viewport. */
+.cv-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 900px;
 }

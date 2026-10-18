@@ -16,7 +16,7 @@ Maquette destinée à convaincre la coopérative d'accepter la proposition de LU
 - Slogan : « Qui ne se plante pas ne pousse jamais ».
 - Adresse : Rue du Lycée de Gassi, Quartier Gassi, N'Djaména, Tchad.
 - Téléphones : +235 65 57 09 37 / 63 33 16 89 / 98 28 36 70.
-- E-mail : le site utilise `coop.dcva@gmail.com` (Facebook) ; le dépliant imprimé affiche `nangadoum999@gmail.com`. **À trancher avec la cheffe de la coopérative.**
+- E-mail officiel : `coop.dcva@gmail.com` (décision du 18/10/2026). Le dépliant imprimé affiche `nangadoum999@gmail.com` : ne pas l'utiliser sur le site.
 - Facebook : https://www.facebook.com/profile.php?id=61573061867030
 - Présidente : Mme Mémadji Reoutou Ngaroroum.
 - Mission (dépliant) : promotion des actions féminines, protection et autonomisation des femmes marginalisées, et en particulier des femmes vivant avec un handicap.

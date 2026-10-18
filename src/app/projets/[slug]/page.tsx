@@ -87,7 +87,7 @@ export default async function ProjetPage({ params }: Props) {
           <ul className="mt-10 grid gap-5 md:grid-cols-3">
             {projet.partenariats.map((p, i) => (
               <li key={p.title} className="rounded-3xl border border-soil-100 bg-cream p-7">
-                <span className="font-display text-4xl font-semibold text-sesame-500">
+                <span className="font-display text-4xl font-semibold text-sesame-700">
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <h3 className="font-display mt-3 text-xl font-semibold text-leaf-900">{p.title}</h3>

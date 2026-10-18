@@ -9,7 +9,7 @@ export function Logo({ light = false }: { light?: boolean }) {
         alt=""
         width={193}
         height={322}
-        priority
+        loading="eager"
         className="h-12 w-auto shrink-0"
       />
       <span className="leading-none">
@@ -35,10 +35,10 @@ export function Logo({ light = false }: { light?: boolean }) {
 /** Logo complet officiel (vectoriel, net sur tous les écrans). */
 export function LogoFull({
   className = "",
-  priority = false,
+  eager = false,
 }: {
   className?: string;
-  priority?: boolean;
+  eager?: boolean;
 }) {
   return (
     <Image
@@ -46,7 +46,7 @@ export function LogoFull({
       alt="Logo officiel de la COOP-DCVA : une pousse entre deux mains au-dessus d'une terre cultivée"
       width={780}
       height={450}
-      priority={priority}
+      loading={eager ? "eager" : "lazy"}
       className={`h-auto w-full ${className}`}
     />
   );

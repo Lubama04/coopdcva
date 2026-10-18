@@ -80,7 +80,7 @@ export default function Home() {
               alt="Emblème de la COOP-DCVA : une pousse entre deux mains au-dessus d'une terre cultivée"
               width={193}
               height={322}
-              priority
+              loading="eager"
               className="sway absolute left-1/2 top-1/2 h-[60%] w-auto -translate-x-1/2 -translate-y-1/2"
             />
             <figure className="absolute -left-2 bottom-2 w-[34%] -rotate-6 overflow-hidden rounded-2xl border-4 border-paper shadow-xl shadow-leaf-900/40 sm:-left-6">
@@ -90,7 +90,7 @@ export default function Home() {
                 width={heroPhotos.a.width}
                 height={heroPhotos.a.height}
                 sizes="160px"
-                priority
+                loading="eager"
                 className="aspect-[3/4] h-auto w-full object-cover"
               />
             </figure>
@@ -101,7 +101,7 @@ export default function Home() {
                 width={heroPhotos.b.width}
                 height={heroPhotos.b.height}
                 sizes="160px"
-                priority
+                loading="eager"
                 className="aspect-square h-auto w-full object-cover"
               />
             </figure>
@@ -252,7 +252,7 @@ export default function Home() {
         <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {valeurs.map((v, i) => (
             <li key={v.title} className="rounded-3xl border border-soil-100 bg-cream p-6">
-              <span className="font-display text-4xl font-semibold text-sesame-500">
+              <span className="font-display text-4xl font-semibold text-sesame-700">
                 {String(i + 1).padStart(2, "0")}
               </span>
               <h3 className="font-display mt-3 text-xl font-semibold text-leaf-900">{v.title}</h3>

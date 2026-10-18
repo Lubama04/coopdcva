@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import { fraunces, inter } from "./fonts";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
@@ -64,7 +65,7 @@ const jsonLd = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="fr" className="h-full">
+    <html lang="fr" className={`h-full ${fraunces.variable} ${inter.variable}`}>
       <body className="flex min-h-full flex-col">
         <a
           href="#contenu"

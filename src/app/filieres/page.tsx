@@ -43,7 +43,7 @@ export default function FilieresPage() {
             { t: "Vente et formation", x: "Commercialisation par les membres, qui se forment." },
           ].map((e, i) => (
             <li key={e.t} className="rounded-3xl bg-paper p-6">
-              <span className="font-display text-4xl font-semibold text-sesame-500">{String(i + 1).padStart(2, "0")}</span>
+              <span className="font-display text-4xl font-semibold text-sesame-700">{String(i + 1).padStart(2, "0")}</span>
               <h3 className="font-display mt-2 text-lg font-semibold text-leaf-900">{e.t}</h3>
               <p className="mt-1 text-sm text-ink-soft">{e.x}</p>
             </li>

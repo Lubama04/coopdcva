@@ -101,6 +101,8 @@ export function GalerieExplorer() {
                 width={p.width}
                 height={p.height}
                 sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                loading={i < 3 ? "eager" : "lazy"}
+                fetchPriority={i === 0 ? "high" : undefined}
                 className="h-auto w-full transition-transform duration-500 group-hover:scale-[1.03]"
               />
               <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-leaf-900/90 via-leaf-900/50 to-transparent px-5 pb-4 pt-14">

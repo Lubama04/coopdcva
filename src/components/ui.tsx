@@ -60,7 +60,7 @@ export function Section({
   className?: string;
 }) {
   return (
-    <section className={`px-5 py-16 sm:py-20 ${className}`}>
+    <section className={`cv-auto px-5 py-16 sm:py-20 ${className}`}>
       <div className="mx-auto max-w-6xl">{children}</div>
     </section>
   );

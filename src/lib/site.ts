@@ -14,6 +14,7 @@ export const site = {
   founded: "10 juillet 2023",
   address: "Quartier Gassi, N'Djaména, Tchad",
   addressDetail: "Rue du Lycée de Gassi, Quartier Gassi, N'Djaména",
+  /** E-mail officiel retenu le 18/10/2026 (le dépliant imprimé affiche une autre adresse, non utilisée). */
   email: "coop.dcva@gmail.com",
   phone: "+235 65 57 09 37",
   phoneHref: "tel:+23565570937",
@@ -22,8 +23,6 @@ export const site = {
     { display: "+235 63 33 16 89", href: "tel:+23563331689" },
     { display: "+235 98 28 36 70", href: "tel:+23598283670" },
   ],
-  /** E-mail imprimé sur le dépliant officiel (conflit avec `email` : à trancher, voir A-CONFIRMER.md). */
-  emailDepliant: "nangadoum999@gmail.com",
   whatsapp: "https://wa.me/23565570937",
   whatsappMessage: "Bonjour COOP-DCVA, je vous écris depuis votre site internet.",
   facebook: "https://www.facebook.com/profile.php?id=61573061867030",

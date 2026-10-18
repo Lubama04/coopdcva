@@ -45,10 +45,10 @@ export default function ContactPage() {
             </div>
             <div className="rounded-3xl border border-soil-100 bg-paper p-6">
               <h2 className="font-display text-xl font-semibold text-leaf-900">Téléphone</h2>
-              <ul className="mt-2 space-y-1">
+              <ul className="mt-1">
                 {site.phones.map((ph) => (
                   <li key={ph.href}>
-                    <a href={ph.href} className="text-lg font-semibold text-leaf-700 hover:underline">
+                    <a href={ph.href} className="inline-flex min-h-11 items-center text-lg font-semibold text-leaf-700 hover:underline">
                       {ph.display}
                     </a>
                   </li>
@@ -57,13 +57,13 @@ export default function ContactPage() {
             </div>
             <div className="rounded-3xl border border-soil-100 bg-paper p-6">
               <h2 className="font-display text-xl font-semibold text-leaf-900">E-mail</h2>
-              <a href={`mailto:${site.email}`} className="mt-2 block break-all text-lg font-semibold text-leaf-700 hover:underline">
+              <a href={`mailto:${site.email}`} className="mt-1 flex min-h-11 items-center break-all text-lg font-semibold text-leaf-700 hover:underline">
                 {site.email}
               </a>
             </div>
             <div className="rounded-3xl border border-soil-100 bg-paper p-6">
               <h2 className="font-display text-xl font-semibold text-leaf-900">Réseaux</h2>
-              <a href={site.facebook} target="_blank" rel="noopener noreferrer" className="mt-2 block font-semibold text-leaf-700 hover:underline">
+              <a href={site.facebook} target="_blank" rel="noopener noreferrer" className="mt-1 flex min-h-11 items-center font-semibold text-leaf-700 hover:underline">
                 Page Facebook de la coopérative
               </a>
             </div>

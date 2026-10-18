@@ -41,6 +41,7 @@ export function ProjetsExplorer() {
         })}
       </div>
 
+      <h2 className="sr-only">Liste des projets</h2>
       <ul className="mt-8 grid gap-6 md:grid-cols-2" aria-live="polite">
         {visibles.map((p) => (
           <li key={p.slug}>

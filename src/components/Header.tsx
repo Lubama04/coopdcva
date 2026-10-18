@@ -25,8 +25,9 @@ export function Header() {
       }}
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3">
-        <Link href="/" aria-label="COOP-DCVA, retour à l'accueil" onClick={() => setOpen(false)}>
+        <Link href="/" onClick={() => setOpen(false)}>
           <Logo />
+          <span className="sr-only">, retour à l&apos;accueil</span>
         </Link>
 
         <nav aria-label="Navigation principale" className="hidden lg:block">
