@@ -7,7 +7,7 @@ Site institutionnel de la Coopérative de Production et de Développement des Ch
 
 ## Technique
 
-Next.js 16 (App Router, pages statiques), React 19, TypeScript, Tailwind CSS v4. Aucune base de données, aucune clé secrète.
+Next.js 16 (App Router, pages statiques), React 19, TypeScript, Tailwind CSS v4. Aucune base de données. Une seule clé secrète : celle de Resend pour le formulaire de contact.
 
 ```bash
 npm install
@@ -26,6 +26,20 @@ npm run build
 | Ajouter un projet | `src/lib/site.ts` (`projets`) : la liste et la page détail se créent seules |
 | Ajouter une photo | déposer le fichier dans `public/images/galerie/` (nom en minuscules, sans accents) puis ajouter une entrée dans `galerie` avec le **nom officiel** comme titre |
 | Logo | `public/images/logo.svg` et `embleme.svg` (vectoriels, tirés de `LOGO COOP.pdf`) |
+
+## Formulaire de contact (Resend)
+
+Le formulaire envoie vers `src/app/api/contact/route.ts`, qui valide les champs (mêmes règles côté navigateur, `src/lib/contact.ts`), filtre les robots (champ piège, contrôle d'origine, 5 messages par 10 min et par adresse IP) et transmet le message par l'API Resend. En cas d'échec, la personne peut réessayer ou renvoyer le même message par WhatsApp ou e-mail.
+
+Variables d'environnement (voir `.env.example`) à créer dans Vercel → projet `coop-dcva-site` → Settings → Environment Variables (Production et Preview) :
+
+| Variable | Obligatoire | Valeur |
+|---|---|---|
+| `RESEND_API_KEY` | oui | clé créée sur resend.com (accès « Sending ») |
+| `CONTACT_TO_EMAIL` | non | adresse qui reçoit les messages (défaut : e-mail du site) |
+| `CONTACT_FROM_EMAIL` | conseillé | ex. `Site COOP-DCVA <contact@domaine-de-la-coop>` une fois le domaine vérifié chez Resend |
+
+Sans domaine vérifié, Resend n'accepte que l'expéditeur `onboarding@resend.dev` **et n'envoie qu'à l'adresse du compte Resend** : pour les tests, `CONTACT_TO_EMAIL` doit donc être l'e-mail du compte. Redéployer après avoir ajouté les variables.
 
 ## Mise en ligne officielle
 

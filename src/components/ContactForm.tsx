@@ -1,77 +1,120 @@
 "use client";
 
 import { useRef, useState, type FormEvent } from "react";
+import { limites, motifs, validateContact, type Champ, type ContactErrors, type ContactInput } from "@/lib/contact";
 import { site } from "@/lib/site";
 import { WhatsAppIcon } from "./WhatsAppButton";
 
-type Champ = "nom" | "contact" | "message";
-type Errors = Partial<Record<Champ, string>>;
-type Canal = "whatsapp" | "email";
+type Etat = "repos" | "envoi" | "succes" | "erreur";
 
-const motifs = [
-  "Acheter des produits",
-  "Partenariat ou financement (PROVAL-ZD)",
-  "Formation",
-  "Autre demande",
-];
+function texteMessage(v: ContactInput) {
+  return `Nom : ${v.nom}\nContact : ${v.contact}\n\n${v.message}`;
+}
 
 /**
- * Formulaire sans serveur : il valide les champs puis ouvre WhatsApp ou le client
- * mail de la personne avec le message prêt à envoyer (fonctionne même avec une
- * connexion faible, rien n'est stocké).
- * TODO (version finale) : envoi direct par un service d'e-mail (voir rapport).
+ * Formulaire envoyé par /api/contact (Resend). En cas d'échec (réseau faible,
+ * service indisponible), la personne peut réessayer ou passer par WhatsApp / e-mail
+ * avec son message déjà rédigé : rien n'est perdu.
  */
 export function ContactForm() {
-  const [errors, setErrors] = useState<Errors>({});
-  const [statut, setStatut] = useState("");
-  const canal = useRef<Canal>("whatsapp");
+  const [errors, setErrors] = useState<ContactErrors>({});
+  const [etat, setEtat] = useState<Etat>("repos");
+  const [erreurServeur, setErreurServeur] = useState("");
+  const [dernier, setDernier] = useState<ContactInput | null>(null);
+  const formRef = useRef<HTMLFormElement>(null);
+  const statutRef = useRef<HTMLDivElement>(null);
+
+  function lire(form: HTMLFormElement): ContactInput & { site_web: string } {
+    const data = new FormData(form);
+    return {
+      nom: String(data.get("nom") ?? "").trim(),
+      contact: String(data.get("contact") ?? "").trim(),
+      motif: String(data.get("motif") ?? motifs[0]),
+      message: String(data.get("message") ?? "").trim(),
+      site_web: String(data.get("site_web") ?? ""),
+    };
+  }
+
+  async function envoyer(valeurs: ContactInput & { site_web: string }) {
+    setEtat("envoi");
+    setErreurServeur("");
+    setDernier(valeurs);
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(valeurs),
+        signal: AbortSignal.timeout(20_000),
+      });
+      const body = (await res.json().catch(() => ({}))) as { ok?: boolean; error?: string; errors?: ContactErrors };
+      if (res.ok && body.ok) {
+        setEtat("succes");
+        formRef.current?.reset();
+      } else if (res.status === 422 && body.errors) {
+        setErrors(body.errors);
+        setEtat("repos");
+      } else {
+        setErreurServeur(body.error ?? "Le message n'a pas pu être envoyé.");
+        setEtat("erreur");
+      }
+    } catch {
+      setErreurServeur("La connexion semble interrompue.");
+      setEtat("erreur");
+    }
+    requestAnimationFrame(() => statutRef.current?.focus());
+  }
 
   function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    if (etat === "envoi") return;
     const form = e.currentTarget;
-    const data = new FormData(form);
-    const nom = String(data.get("nom") ?? "").trim();
-    const contact = String(data.get("contact") ?? "").trim();
-    const motif = String(data.get("motif") ?? motifs[0]);
-    const message = String(data.get("message") ?? "").trim();
-    // Honeypot: real visitors never see or fill this field.
-    if (String(data.get("site_web") ?? "") !== "") return;
-
-    const next: Errors = {};
-    if (nom.length < 2) next.nom = "Indiquez votre nom.";
-    if (contact.replace(/\s/g, "").length < 6)
-      next.contact = "Indiquez un e-mail ou un numéro de téléphone.";
-    if (message.length < 10) next.message = "Votre message est un peu court (10 caractères minimum).";
+    const valeurs = lire(form);
+    const next = validateContact(valeurs);
     setErrors(next);
     const premier = (Object.keys(next) as Champ[])[0];
     if (premier) {
-      setStatut("Le formulaire contient des erreurs.");
       (form.elements.namedItem(premier) as HTMLElement | null)?.focus();
       return;
     }
-
-    const texte = `${motif}\n\nNom : ${nom}\nContact : ${contact}\n\n${message}`;
-    if (canal.current === "whatsapp") {
-      window.open(
-        `${site.whatsapp}?text=${encodeURIComponent(`[Site COOP-DCVA] ${texte}`)}`,
-        "_blank",
-        "noopener,noreferrer",
-      );
-      setStatut("WhatsApp s'ouvre avec votre message : il ne reste qu'à appuyer sur « Envoyer ».");
-    } else {
-      const subject = encodeURIComponent(`[Site COOP-DCVA] ${motif}`);
-      const body = encodeURIComponent(`Nom : ${nom}\nContact : ${contact}\n\n${message}`);
-      window.location.href = `mailto:${site.email}?subject=${subject}&body=${body}`;
-      setStatut("Votre messagerie s'ouvre avec le message prêt à envoyer.");
-    }
+    void envoyer(valeurs);
   }
 
   const field =
     "mt-2 w-full rounded-2xl border border-soil-500/30 bg-paper px-4 py-3 text-base text-ink placeholder:text-ink-soft/60 focus:border-leaf-600 aria-[invalid=true]:border-[#b3261e]";
   const err = "mt-1 text-sm font-medium text-[#b3261e]";
+  const envoiEnCours = etat === "envoi";
+
+  const repli = dernier
+    ? {
+        whatsapp: `${site.whatsapp}?text=${encodeURIComponent(`[Site COOP-DCVA] ${dernier.motif}\n\n${texteMessage(dernier)}`)}`,
+        mail: `mailto:${site.email}?subject=${encodeURIComponent(`[Site COOP-DCVA] ${dernier.motif}`)}&body=${encodeURIComponent(texteMessage(dernier))}`,
+      }
+    : null;
+
+  if (etat === "succes") {
+    return (
+      <div ref={statutRef} tabIndex={-1} role="status" className="rounded-2xl bg-leaf-50 p-6 focus:outline-none">
+        <p className="font-display text-xl font-semibold text-leaf-700">Merci, votre message est bien envoyé.</p>
+        <p className="mt-2 text-sm text-ink-soft">
+          La coopérative vous répondra dès que possible. Pour une demande urgente, appelez le{" "}
+          <a href={site.phoneHref} className="font-semibold text-leaf-700 underline">
+            {site.phone}
+          </a>
+          .
+        </p>
+        <button
+          type="button"
+          onClick={() => setEtat("repos")}
+          className="mt-5 inline-flex min-h-11 items-center rounded-full border-2 border-leaf-700 px-5 text-sm font-semibold text-leaf-700 hover:bg-white"
+        >
+          Écrire un autre message
+        </button>
+      </div>
+    );
+  }
 
   return (
-    <form onSubmit={onSubmit} noValidate className="space-y-5">
+    <form ref={formRef} onSubmit={onSubmit} noValidate className="space-y-5" aria-busy={envoiEnCours}>
       <div>
         <label htmlFor="nom" className="text-sm font-semibold text-leaf-900">
           Votre nom
@@ -81,7 +124,7 @@ export function ContactForm() {
           name="nom"
           type="text"
           autoComplete="name"
-          maxLength={120}
+          maxLength={limites.nom}
           required
           className={field}
           aria-invalid={!!errors.nom}
@@ -100,7 +143,7 @@ export function ContactForm() {
           type="text"
           inputMode="email"
           autoComplete="email"
-          maxLength={120}
+          maxLength={limites.contact}
           required
           className={field}
           aria-invalid={!!errors.contact}
@@ -131,7 +174,7 @@ export function ContactForm() {
           id="message"
           name="message"
           rows={5}
-          maxLength={2000}
+          maxLength={limites.message}
           required
           className={field}
           aria-invalid={!!errors.message}
@@ -145,27 +188,60 @@ export function ContactForm() {
         <input id="site_web" name="site_web" type="text" tabIndex={-1} autoComplete="off" />
       </div>
 
-      <div className="flex flex-col gap-3 sm:flex-row">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
         <button
           type="submit"
-          onClick={() => (canal.current = "whatsapp")}
-          className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#1f7a43] px-6 py-3 text-base font-semibold text-white transition-colors hover:bg-leaf-700"
+          disabled={envoiEnCours}
+          className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-leaf-700 px-7 py-3 text-base font-semibold text-white transition-colors hover:bg-leaf-600 disabled:cursor-wait disabled:opacity-70"
+        >
+          {envoiEnCours && (
+            <span aria-hidden="true" className="h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white" />
+          )}
+          {envoiEnCours ? "Envoi en cours…" : "Envoyer mon message"}
+        </button>
+        <a
+          href={`${site.whatsapp}?text=${encodeURIComponent(site.whatsappMessage)}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border-2 border-[#1f7a43] px-6 py-3 text-base font-semibold text-[#1f7a43] transition-colors hover:bg-leaf-50"
         >
           <WhatsAppIcon className="h-5 w-5" />
-          Envoyer sur WhatsApp
-        </button>
-        <button
-          type="submit"
-          onClick={() => (canal.current = "email")}
-          className="inline-flex min-h-12 items-center justify-center rounded-full border-2 border-leaf-700 px-6 py-3 text-base font-semibold text-leaf-700 transition-colors hover:bg-leaf-50"
-        >
-          Envoyer par e-mail
-        </button>
+          Écrire sur WhatsApp
+        </a>
       </div>
 
-      <p role="status" className="min-h-5 text-sm font-medium text-leaf-700">
-        {statut}
-      </p>
+      <div ref={statutRef} tabIndex={-1} role="status" aria-live="polite" className="focus:outline-none">
+        {envoiEnCours && <p className="sr-only">Envoi du message en cours.</p>}
+        {etat === "erreur" && repli && (
+          <div className="rounded-2xl border border-[#b3261e]/30 bg-[#fdf1ef] p-5 text-sm text-ink">
+            <p className="font-semibold text-[#b3261e]">{erreurServeur} Votre message n&apos;est pas perdu.</p>
+            <div className="mt-3 flex flex-wrap gap-2">
+              <button
+                type="button"
+                onClick={() => dernier && void envoyer({ ...dernier, site_web: "" })}
+                className="inline-flex min-h-11 items-center rounded-full bg-leaf-700 px-5 font-semibold text-white hover:bg-leaf-600"
+              >
+                Réessayer
+              </button>
+              <a
+                href={repli.whatsapp}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex min-h-11 items-center gap-2 rounded-full bg-[#1f7a43] px-5 font-semibold text-white"
+              >
+                <WhatsAppIcon className="h-4 w-4" />
+                Envoyer sur WhatsApp
+              </a>
+              <a
+                href={repli.mail}
+                className="inline-flex min-h-11 items-center rounded-full border-2 border-leaf-700 px-5 font-semibold text-leaf-700"
+              >
+                Envoyer par e-mail
+              </a>
+            </div>
+          </div>
+        )}
+      </div>
     </form>
   );
 }

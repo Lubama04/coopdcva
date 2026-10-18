@@ -72,8 +72,8 @@ export default function ContactPage() {
           <div className="rounded-3xl border border-soil-100 bg-paper p-8 shadow-lg shadow-leaf-900/5">
             <h2 className="font-display text-2xl font-semibold text-leaf-900">Envoyer un message</h2>
             <p className="mb-6 mt-1 text-sm text-ink-soft">
-              Tous les champs sont nécessaires. Votre message s&apos;ouvre dans WhatsApp ou dans
-              votre messagerie, prêt à envoyer.
+              Tous les champs sont nécessaires. Votre message est envoyé directement à la
+              coopérative.
             </p>
             <ContactForm />
           </div>
